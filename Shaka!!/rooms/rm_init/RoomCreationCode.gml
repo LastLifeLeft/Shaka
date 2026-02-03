@@ -1,0 +1,1 @@
+PP.transition_start(-1, PP_TRANSITION.FADE_OUT, {destination: rm_splash});

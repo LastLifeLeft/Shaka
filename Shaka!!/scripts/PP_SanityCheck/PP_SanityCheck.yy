@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"PP_SanityCheck",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PP_SanityCheck",
+  "parent":{
+    "name":"scripts",
+    "path":"folders/Extensions/PP5/scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
