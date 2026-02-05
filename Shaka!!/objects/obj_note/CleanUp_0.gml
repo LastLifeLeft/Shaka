@@ -1,4 +1,3 @@
-// Remove from rhythm engine's active notes list if still there
 if (instance_exists(rhythm_engine)) {
     var _index = array_get_index(rhythm_engine.active_notes, id);
     if (_index >= 0) {

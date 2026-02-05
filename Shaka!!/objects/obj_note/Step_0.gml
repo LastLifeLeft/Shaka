@@ -1,16 +1,14 @@
-if (!instance_exists(obj_game_controller)) {
-    instance_destroy();
-    exit;
+if (!initialized) exit;
+
+// Get current song time from game controller
+var _current_time_ms = 0;
+if (instance_exists(obj_game_controller)) {
+    _current_time_ms = obj_game_controller.current_time_ms;
 }
 
-// Move note outward from center
-current_distance += approach_speed;
-
-// Check if note is too far past the pad (despawn)
-if (current_distance > PAD_RADIUS + 100) {
-    instance_destroy();
-    exit;
-}
+// Calculate position based on TIME (not frames!)
+// This ensures notes stay synced with music even if frames drop
+calculate_position_from_time(_current_time_ms);
 
 // Update hit effect
 if (hit_effect) {
@@ -20,4 +18,12 @@ if (hit_effect) {
         instance_destroy();
         exit;
     }
+}
+
+// Check if past deadline (only if not already hit)
+if (!note_data.hit && note_is_past_deadline(current_distance, highway.radius)) {
+    // Report miss and destroy
+    rhythm_engine.rhythm_engine_report_miss(id);
+    instance_destroy();
+    exit;
 }

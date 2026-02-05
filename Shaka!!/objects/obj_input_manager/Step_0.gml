@@ -1,33 +1,18 @@
-// Find rhythm engine if not set
-if (!instance_exists(rhythm_engine)) {
-    rhythm_engine = instance_find(obj_rhythm_engine, 0);
-}
-
 if (!instance_exists(rhythm_engine)) exit;
 if (!instance_exists(obj_game_controller)) exit;
+if (obj_game_controller.game_state != "playing") exit;
+if (obj_game_controller.is_paused) exit;
 
-var _controller = obj_game_controller;
+// Get current time (with calibration offset)
+var _current_time_ms = obj_game_controller.current_time_ms + input_offset_ms;
 
-// Only process input during gameplay
-if (_controller.game_state != "playing") exit;
+// Check each position for input
+check_position_input(NOTE_POSITION_SHAKATTO.HIGH_LEFT,	INPUT_VERB.HIGH_LEFT	, _current_time_ms);
+check_position_input(NOTE_POSITION_SHAKATTO.HIGH_MID,	INPUT_VERB.HIGH_MID		, _current_time_ms);
+check_position_input(NOTE_POSITION_SHAKATTO.HIGH_RIGHT, INPUT_VERB.HIGH_RIGHT	, _current_time_ms);
+check_position_input(NOTE_POSITION_SHAKATTO.LOW_LEFT,	INPUT_VERB.LOW_LEFT		, _current_time_ms);
+check_position_input(NOTE_POSITION_SHAKATTO.LOW_MID,	INPUT_VERB.LOW_MID		, _current_time_ms);
+check_position_input(NOTE_POSITION_SHAKATTO.LOW_RIGHT,	INPUT_VERB.LOW_RIGHT	, _current_time_ms);
 
-// Get current time with calibration offset
-var _time_ms = _controller.current_time_ms + calibration_offset;
-
-// Check each position
-check_position_input(INPUT_VERB.HIGH_LEFT, NOTE_POSITION.HIGH_LEFT, _time_ms);
-check_position_input(INPUT_VERB.HIGH_MID, NOTE_POSITION.HIGH_MID, _time_ms);
-check_position_input(INPUT_VERB.HIGH_RIGHT, NOTE_POSITION.HIGH_RIGHT, _time_ms);
-check_position_input(INPUT_VERB.LOW_LEFT, NOTE_POSITION.LOW_LEFT, _time_ms);
-check_position_input(INPUT_VERB.LOW_MID, NOTE_POSITION.LOW_MID, _time_ms);
-check_position_input(INPUT_VERB.LOW_RIGHT, NOTE_POSITION.LOW_RIGHT, _time_ms);
-
-// Check shake
-if (InputPressed(INPUT_VERB.SHAKE) && !shake_pressed) {
-    shake_pressed = true;
-    process_shake_input(_time_ms);
-}
-
-if (InputReleased(INPUT_VERB.SHAKE)) {
-    shake_pressed = false;
-}
+// Check shake input
+check_shake_input(_current_time_ms);

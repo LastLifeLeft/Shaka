@@ -1,7 +1,7 @@
 /// @description Game constants and enums for Shaka rhythm game
 
 // Note positions (matches INPUT_VERB enum)
-enum NOTE_POSITION {
+enum NOTE_POSITION_SHAKATTO {
     HIGH_LEFT = 0,
     HIGH_MID = 1,
     HIGH_RIGHT = 2,
@@ -10,11 +10,28 @@ enum NOTE_POSITION {
     LOW_RIGHT = 5,
 }
 
+
+enum NOTE_POSITION_SAMBA {
+    HIGH_LEFT = 0,
+    MID_LEFT = 1,
+    LOW_LEFT = 2,
+    HIGH_RIGHT = 3,
+    MID_RIGHT = 4,
+    LOW_RIGHT = 5,
+}
+
+
 // Note types
 enum NOTE_TYPE {
     NORMAL,     // Single note
     DOUBLE,     // Two positions at same time
     SHAKE,      // Shake gesture
+}
+
+// Game modes
+enum GAME_MODE {
+    SAMBA,      // Vertical symmetry (original Samba de Amigo)
+    SHAKATTO,   // Horizontal symmetry (Shakatto Tambourine)
 }
 
 // Hit ratings
@@ -69,3 +86,4 @@ enum NOTE_RATING {
 #macro COLOR_LOW_RIGHT c_aqua
 #macro COLOR_SHAKE c_white
 #macro COLOR_DOUBLE c_orange
+

@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "title": "Demo Track",
+    "artist": "Shaka Team",
+    "bpm": 120,
+    "offset_ms": 0,
+    "audio_file": "demo_track.ogg"
+  },
+  "notes": [
+    {"beat": 4.0, "position": 0, "type": "normal"},
+    {"beat": 4.5, "position": 1, "type": "normal"},
+    {"beat": 5.0, "position": 2, "type": "normal"},
+    {"beat": 5.5, "position": 1, "type": "normal"},
+    
+    {"beat": 6.0, "position": 3, "type": "normal"},
+    {"beat": 6.5, "position": 4, "type": "normal"},
+    {"beat": 7.0, "position": 5, "type": "normal"},
+    {"beat": 7.5, "position": 4, "type": "normal"},
+    
+    {"beat": 8.0, "position": 0, "type": "normal"},
+    {"beat": 8.0, "position": 3, "type": "normal"},
+    {"beat": 8.5, "position": 1, "type": "normal"},
+    {"beat": 8.5, "position": 4, "type": "normal"},
+    {"beat": 9.0, "position": 2, "type": "normal"},
+    {"beat": 9.0, "position": 5, "type": "normal"},
+    
+    {"beat": 10.0, "position": 0, "type": "normal"},
+    {"beat": 10.25, "position": 1, "type": "normal"},
+    {"beat": 10.5, "position": 2, "type": "normal"},
+    {"beat": 10.75, "position": 1, "type": "normal"},
+    
+    {"beat": 11.0, "position": 3, "type": "normal"},
+    {"beat": 11.25, "position": 4, "type": "normal"},
+    {"beat": 11.5, "position": 5, "type": "normal"},
+    {"beat": 11.75, "position": 4, "type": "normal"},
+    
+    {"beat": 12.0, "position": 0, "type": "normal"},
+    {"beat": 12.0, "position": 5, "type": "normal"},
+    {"beat": 12.5, "position": 1, "type": "normal"},
+    {"beat": 12.5, "position": 4, "type": "normal"},
+    {"beat": 13.0, "position": 2, "type": "normal"},
+    {"beat": 13.0, "position": 3, "type": "normal"},
+    
+    {"beat": 14.0, "position": 1, "type": "normal"},
+    {"beat": 14.5, "position": 4, "type": "normal"},
+    {"beat": 15.0, "position": 1, "type": "normal"},
+    {"beat": 15.5, "position": 4, "type": "normal"},
+    
+    {"beat": 16.0, "position": 0, "type": "normal"},
+    {"beat": 16.0, "position": 2, "type": "normal"},
+    {"beat": 16.0, "position": 3, "type": "normal"},
+    {"beat": 16.0, "position": 5, "type": "normal"},
+    
+    {"beat": 17.0, "position": 1, "type": "normal"},
+    {"beat": 17.5, "position": 4, "type": "normal"},
+    {"beat": 18.0, "position": 1, "type": "normal"},
+    {"beat": 18.5, "position": 4, "type": "normal"},
+    
+    {"beat": 19.0, "position": 0, "type": "normal"},
+    {"beat": 19.25, "position": 1, "type": "normal"},
+    {"beat": 19.5, "position": 2, "type": "normal"},
+    {"beat": 19.75, "position": 1, "type": "normal"},
+    {"beat": 20.0, "position": 0, "type": "normal"}
+  ]
+}

@@ -1,1 +1,0 @@
-PP.gameframe_enable(true);

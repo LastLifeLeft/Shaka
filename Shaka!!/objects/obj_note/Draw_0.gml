@@ -1,11 +1,12 @@
-// Don't draw if hit (unless showing hit effect)
-if (note_data.hit && !hit_effect) {
-    exit;
-}
+if (!initialized) exit;
 
-// Calculate current position based on distance from center
-var _draw_x = get_position_x(note_data.position, current_distance);
-var _draw_y = get_position_y(note_data.position, current_distance);
+// Don't draw if hit (unless showing hit effect)
+if (note_data.hit && !hit_effect) exit;
+
+// Calculate world position from distance and angle
+var _angle = get_position_angle(note_data.position, highway.mode);
+var _draw_x = highway.center_x + lengthdir_x(current_distance, _angle);
+var _draw_y = highway.center_y + lengthdir_y(current_distance, _angle);
 var _draw_alpha = note_alpha;
 var _draw_scale = 1.0;
 
@@ -56,15 +57,12 @@ draw_circle(_draw_x, _draw_y, _size / 2 - 1, true);
 draw_set_alpha(1.0);
 draw_set_color(c_white);
 
-
-// === DRAW EVENT (for debug - F3) ===
-
+// Debug: Show timing info (F3)
 if (keyboard_check(vk_f3) && !hit_effect) {
-    var _controller = obj_game_controller;
-    var _time_diff = note_data.time_ms - _controller.current_time_ms;
-    
     draw_set_font(fnt_default);
     draw_set_halign(fa_center);
     draw_set_color(c_white);
-    draw_text(_draw_x, _draw_y - NOTE_SIZE, string(floor(_time_diff)));
+    
+    var _time_until_hit = hit_time_ms - obj_game_controller.current_time_ms;
+    draw_text(_draw_x, _draw_y - NOTE_SIZE, string(floor(_time_until_hit)));
 }

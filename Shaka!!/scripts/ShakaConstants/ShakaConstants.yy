@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ShakaConstants",
   "parent":{
-    "name":"RO Survivor",
-    "path":"RO Survivor.yyp",
+    "name":"Shaka!!",
+    "path":"Shaka!!.yyp",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

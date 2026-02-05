@@ -1,4 +1,10 @@
-// Active notes (notes currently on screen)
+// Highway context (set by game controller or get from obj_note_highway)
+highway_context = undefined;
+
+// Chart data (set by game controller)
+chart = undefined;
+
+// Active notes tracking
 active_notes = [];
 
 // Scoring state
@@ -11,19 +17,43 @@ perfect_count = 0;
 good_count = 0;
 ok_count = 0;
 miss_count = 0;
-
-// State
-is_playing = false;
+total_notes_hit = 0;
 
 // Visual feedback
 last_rating = NOTE_RATING.MISS;
 last_rating_time = 0;
 rating_display_duration = 30;  // frames
 
+// State
+is_playing = false;
+current_time_ms = 0;
+next_note_index = 0;  // Index of next note to spawn from chart
+
+// Define callback functions that notes will call
+rhythm_engine_report_hit = function(_note, _rating) {
+    register_hit(_note, _rating);
+}
+
+rhythm_engine_report_miss = function(_note) {
+    register_miss(_note);
+}
+
 show_debug_message("Rhythm engine created");
 
 
+
+
 start_game = function() {
+    if (chart == undefined) {
+        show_debug_message("ERROR: Cannot start - no chart loaded!");
+        return;
+    }
+    
+    if (highway_context == undefined) {
+        show_debug_message("ERROR: Cannot start - no highway context!");
+        return;
+    }
+    
     is_playing = true;
     
     // Reset stats
@@ -34,67 +64,99 @@ start_game = function() {
     good_count = 0;
     ok_count = 0;
     miss_count = 0;
+    total_notes_hit = 0;
     
-    show_debug_message("Rhythm engine started");
+    // Reset chart
+    next_note_index = 0;
+    chart.reset();
+    
+    // Clear any existing notes
+    for (var i = 0; i < array_length(active_notes); i++) {
+        if (instance_exists(active_notes[i])) {
+            instance_destroy(active_notes[i]);
+        }
+    }
+    active_notes = [];
+    
+    show_debug_message("Rhythm engine started!");
+    show_debug_message($"Chart: {chart.total_notes} notes, BPM: {chart.bpm}");
+}
+
+stop_game = function() {
+    is_playing = false;
+    
+    // Clean up active notes
+    for (var i = 0; i < array_length(active_notes); i++) {
+        if (instance_exists(active_notes[i])) {
+            instance_destroy(active_notes[i]);
+        }
+    }
+    active_notes = [];
+    
+    show_debug_message("Rhythm engine stopped");
+}
+
+spawn_notes_check = function() {
+    // Calculate spawn time (notes spawn APPROACH_TIME seconds before hit time)
+    var _spawn_time = current_time_ms + (NOTE_APPROACH_TIME * 1000);
+    
+    // Spawn all notes that are ready
+    while (next_note_index < chart.total_notes) {
+        var _note_data = chart.notes[next_note_index];
+        
+        // Check if it's time to spawn this note
+        if (_note_data.time_ms <= _spawn_time && !_note_data.spawned) {
+            spawn_note(_note_data);
+            next_note_index++;
+        } else {
+            // Notes are sorted by time, so we can stop checking
+            break;
+        }
+    }
 }
 
 spawn_note = function(_note_data) {
-    var _note_obj = instance_create_depth(0, 0, -100, obj_note);
-    _note_obj.note_data = _note_data;
-    _note_obj.rhythm_engine = id;
+    // Create the note instance
+    var _note = instance_create_depth(0, 0, -100, obj_note);
     
-    array_push(active_notes, _note_obj);
+    // Create configuration
+    var _config = new NoteInstance(_note_data, highway_context, id);
+    
+    // Pass config to note
+    _note.note_config = _config;
+    
+    // Mark as spawned
+    _note_data.spawned = true;
+    
+    // Track it
+    array_push(active_notes, _note);
+    
+    show_debug_message($"Spawned note: pos={_note_data.position}, time={_note_data.time_ms}ms");
 }
 
-check_input_timing = function(_position, _current_time_ms) {
-    var _best_rating = NOTE_RATING.MISS;
-    var _best_note = undefined;
-    var _best_diff = infinity;
-    
-    // Find the closest note in this position that hasn't been hit
-    for (var i = 0; i < array_length(active_notes); i++) {
-        var _note_obj = active_notes[i];
-        var _note = _note_obj.note_data;
+update_active_notes = function() {
+    // Check from end to avoid index issues when removing
+    for (var i = array_length(active_notes) - 1; i >= 0; i--) {
+        var _note = active_notes[i];
         
-        if (_note.hit) continue;
-        if (_note.position != _position) continue;
-        
-        var _time_diff = abs(_current_time_ms - _note.time_ms);
-        
-        // Must be within OK window
-        if (_time_diff > TIMING_OK) continue;
-        
-        // Track the closest note
-        if (_time_diff < _best_diff) {
-            _best_diff = _time_diff;
-            _best_note = _note_obj;
-            
-            // Determine rating
-            if (_time_diff <= TIMING_PERFECT) {
-                _best_rating = NOTE_RATING.PERFECT;
-            } else if (_time_diff <= TIMING_GOOD) {
-                _best_rating = NOTE_RATING.GOOD;
-            } else {
-                _best_rating = NOTE_RATING.OK;
-            }
+        // Skip if note doesn't exist (shouldn't happen, but safety check)
+        if (!instance_exists(_note)) {
+            array_delete(active_notes, i, 1);
+            continue;
         }
+        
+        // Note will check its own deadline and call report_miss if needed
+        // We just need to remove destroyed notes from our tracking
+        // (This happens automatically when note calls report_miss)
     }
-    
-    // Register the hit
-    if (_best_note != undefined) {
-        register_hit(_best_note, _best_rating);
-        return true;
-    }
-    
-    return false;
 }
 
-register_hit = function(_note_obj, _rating) {
-    var _note = _note_obj.note_data;
+register_hit = function(_note, _rating) {
+    var _note_data = _note.note_data;
     
     // Mark as hit
-    _note.hit = true;
-    _note.rating = _rating;
+    _note_data.hit = true;
+    _note_data.rating = _rating;
     
     // Update combo
     if (_rating == NOTE_RATING.MISS) {
@@ -102,6 +164,7 @@ register_hit = function(_note_obj, _rating) {
     } else {
         current_combo++;
         max_combo = max(max_combo, current_combo);
+        total_notes_hit++;
     }
     
     // Update statistics
@@ -113,7 +176,7 @@ register_hit = function(_note_obj, _rating) {
     }
     
     // Calculate score
-    var _is_double = (_note.type == "double");
+    var _is_double = (_note_data.type == "double");
     var _base_score = get_rating_score(_rating, _is_double);
     var _multiplier = get_combo_multiplier(current_combo);
     var _points = _base_score * _multiplier;
@@ -124,16 +187,44 @@ register_hit = function(_note_obj, _rating) {
     last_rating = _rating;
     last_rating_time = current_time;
     
-    // Create hit effect
-    _note_obj.hit_effect = true;
-    _note_obj.hit_rating = _rating;
+    // Remove from active notes
+    var _index = array_get_index(active_notes, _note);
+    if (_index >= 0) {
+        array_delete(active_notes, _index, 1);
+    }
     
-    show_debug_message($"Hit! Rating: {get_rating_name(_rating)}, " +
+    show_debug_message($"Hit registered! Rating: {get_rating_name(_rating)}, " +
                       $"Points: {_points}, Combo: {current_combo}x");
 }
 
+register_miss = function(_note) {
+    var _note_data = _note.note_data;
+    
+    // Mark as hit (but with MISS rating)
+    _note_data.hit = true;
+    _note_data.rating = NOTE_RATING.MISS;
+    
+    // Reset combo
+    current_combo = 0;
+    
+    // Update statistics
+    miss_count++;
+    
+    // Visual feedback
+    last_rating = NOTE_RATING.MISS;
+    last_rating_time = current_time;
+    
+    // Remove from active notes
+    var _index = array_get_index(active_notes, _note);
+    if (_index >= 0) {
+        array_delete(active_notes, _index, 1);
+    }
+    
+    show_debug_message("Note missed!");
+}
+
 calculate_final_score = function() {
-    var _total_notes = global.current_chart.total_notes;
+    var _total_notes = chart.total_notes;
     var _bonus = 0;
     
     // Full Combo Bonus (no misses, combo never broken)
@@ -164,4 +255,13 @@ calculate_final_score = function() {
     show_debug_message($"Miss: {miss_count}");
     show_debug_message($"Max Combo: {max_combo}");
     show_debug_message($"Total Score: {total_score}");
+    
+    return total_score;
+}
+
+check_song_complete = function() {
+    // Song is complete when:
+    // 1. All notes have been spawned
+    // 2. No active notes remain
+    return next_note_index >= chart.total_notes && array_length(active_notes) == 0;
 }
