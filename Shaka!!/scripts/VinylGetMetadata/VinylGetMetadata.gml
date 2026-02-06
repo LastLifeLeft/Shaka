@@ -8,26 +8,26 @@
 
 function VinylGetMetadata(_pattern, _default = undefined)
 {
-    static _patternMap = __VinylSystem().__patternMap;
-    
-    if (is_handle(_pattern))
-    {
-        return __VinylEnsurePatternSound(_pattern).__metadata ?? _default;
-    }
-    else if (is_string(_pattern))
-    {
-        var _patternStruct = _patternMap[? _pattern];
-        if (_patternStruct != undefined)
-        {
-            return _patternStruct.__metadata ?? _default;
-        }
-        else
-        {
-            __VinylError("Pattern \"", _pattern, "\" not found");
-        }
-    }
-    else
-    {
-        __VinylError("Datatype not supported (", typeof(_pattern), ")");
-    }
+	static _patternMap = __VinylSystem().__patternMap;
+	
+	if (is_handle(_pattern))
+	{
+		return __VinylEnsurePatternSound(_pattern).__metadata ?? _default;
+	}
+	else if (is_string(_pattern))
+	{
+		var _patternStruct = _patternMap[? _pattern];
+		if (_patternStruct != undefined)
+		{
+			return _patternStruct.__metadata ?? _default;
+		}
+		else
+		{
+			__VinylError("Pattern \"", _pattern, "\" not found");
+		}
+	}
+	else
+	{
+		__VinylError("Datatype not supported (", typeof(_pattern), ")");
+	}
 }

@@ -18,33 +18,33 @@ timer = 0;
 get_directory_array = function(_path) {
 	var _folders = [];
 	if (string_char_at(_path, string_length(_path)) != "/") _path += "/";
-    
+	
 	var _name = file_find_first(_path + "*", fa_directory);
-    
+	
 	while (_name != "") {
-	    if (directory_exists(_path + _name)) {
+		if (directory_exists(_path + _name)) {
 			array_insert(_folders, 0, _name);
-	    }
-	    _name = file_find_next();
+		}
+		_name = file_find_next();
 	}
-    
+	
 	file_find_close();
 	return _folders;
 }
 
 get_json_file_array = function(_path) {
-    var _files = [];
-    if (string_char_at(_path, string_length(_path)) != "/") _path += "/";
-    
-    var _name = file_find_first(_path + "*.json", 0);
-    
-    while (_name != "") {
+	var _files = [];
+	if (string_char_at(_path, string_length(_path)) != "/") _path += "/";
+	
+	var _name = file_find_first(_path + "*.json", 0);
+	
+	while (_name != "") {
 		array_insert(_files, 0, _name);
-        _name = file_find_next();
-    }
-    
-    file_find_close();
-    return _files;
+		_name = file_find_next();
+	}
+	
+	file_find_close();
+	return _files;
 }
 
 global.music_folder_array = [];

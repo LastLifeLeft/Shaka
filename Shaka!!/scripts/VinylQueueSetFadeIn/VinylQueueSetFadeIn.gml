@@ -8,10 +8,10 @@
 
 function VinylQueueSetFadeIn(_voice, _fadeInRate = VINYL_DEFAULT_FADE_IN_RATE)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
-    
-    _voiceStruct.__fadeInRate = _fadeInRate;
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
+	
+	_voiceStruct.__fadeInRate = _fadeInRate;
 }

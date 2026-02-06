@@ -13,10 +13,10 @@
 
 function VinylMixVoicesFadeOut(_mixName, _rateOfChange = VINYL_DEFAULT_FADE_OUT_RATE, _pause = false)
 {
-    static _mixDict = __VinylSystem().__mixDict;
-    
-    var _mixStruct = _mixDict[$ _mixName];
-    if (_mixStruct == undefined) __VinylError("Mix \"", _mixName, "\" not recognised");
-     
-    _mixStruct.__VoicesFadeOut(max(0.001, _rateOfChange), _pause);
+	static _mixDict = __VinylSystem().__mixDict;
+	
+	var _mixStruct = _mixDict[$ _mixName];
+	if (_mixStruct == undefined) __VinylError("Mix \"", _mixName, "\" not recognised");
+	 
+	_mixStruct.__VoicesFadeOut(max(0.001, _rateOfChange), _pause);
 }

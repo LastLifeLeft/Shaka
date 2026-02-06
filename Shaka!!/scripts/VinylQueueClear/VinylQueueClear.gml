@@ -9,15 +9,15 @@
 
 function VinylQueueClear(_voice, _stopCurrent = false)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
-    
-    if (_stopCurrent)
-    {
-        VinylStop(_voice);
-    }
-    
-    array_resize(_voiceStruct.__soundArray, 0);
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
+	
+	if (_stopCurrent)
+	{
+		VinylStop(_voice);
+	}
+	
+	array_resize(_voiceStruct.__soundArray, 0);
 }

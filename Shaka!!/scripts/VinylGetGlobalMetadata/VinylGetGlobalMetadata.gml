@@ -8,7 +8,7 @@
 
 function VinylGetGlobalMetadata(_metadata, _default = undefined)
 {
-    static _metadataDict = __VinylSystem().__metadataDict;
-    
-    return _metadataDict[$ _metadata] ?? _default;
+	static _metadataDict = __VinylSystem().__metadataDict;
+	
+	return _metadataDict[$ _metadata] ?? _default;
 }

@@ -14,9 +14,9 @@
 /// information.
 /// 
 /// N.B. Abstract voices have no "duration" and won't stop playing by themselves. You must call
-///      `VinylStop()` on the voice when you're done with the abstract voice or else you will
-///      create a memory leak. You may also use `VinylAbstractStopAll()` to stop all current
-///      abstract voices.
+///	  `VinylStop()` on the voice when you're done with the abstract voice or else you will
+///	  create a memory leak. You may also use `VinylAbstractStopAll()` to stop all current
+///	  abstract voices.
 /// 
 /// @param [gain=1]
 /// @param [pitch=1]
@@ -26,5 +26,5 @@
 
 function VinylAbstract(_gainLocal = 1, _pitchLocal = 1, _duckerNameLocal = undefined, _duckPrioLocal = undefined, _mixName = undefined)
 {
-    return (new __VinylClassVoiceAbstract(undefined, _gainLocal, _pitchLocal, _duckerNameLocal, _duckPrioLocal, _mixName)).__voiceReference;
+	return (new __VinylClassVoiceAbstract(undefined, _gainLocal, _pitchLocal, _duckerNameLocal, _duckPrioLocal, _mixName)).__voiceReference;
 }

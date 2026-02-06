@@ -9,7 +9,7 @@
 
 function VinylGetGMVoice(_voice)
 {
-    if (_voice == undefined) return undefined;
-    
-    return __VinylEnsureSoundVoice(_voice).__GetGameMakerVoice();
+	if (_voice == undefined) return undefined;
+	
+	return __VinylEnsureSoundVoice(_voice).__GetGameMakerVoice();
 }

@@ -2,5 +2,5 @@
 
 function __VinylSoundGetGain(_sound)
 {
-    return __VinylEnsurePatternSound(_sound).__gain;
+	return __VinylEnsurePatternSound(_sound).__gain;
 }

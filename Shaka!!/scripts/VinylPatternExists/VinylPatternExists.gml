@@ -10,19 +10,19 @@
 
 function VinylPatternExists(_pattern, _explicit = false)
 {
-    static _soundMap   = __VinylSystem().__soundMap;
-    static _patternMap = __VinylSystem().__patternMap;
-    
-    if (is_handle(_pattern))
-    {
-        if (not audio_exists(_pattern)) return false;
-        if (not _explicit) return true;
-        return (_soundMap[? int64(_pattern)] != undefined);
-    }
-    else if (is_string(_pattern))
-    {
-        return (_patternMap[? _pattern] != undefined);
-    }
-    
-    return false;
+	static _soundMap   = __VinylSystem().__soundMap;
+	static _patternMap = __VinylSystem().__patternMap;
+	
+	if (is_handle(_pattern))
+	{
+		if (not audio_exists(_pattern)) return false;
+		if (not _explicit) return true;
+		return (_soundMap[? int64(_pattern)] != undefined);
+	}
+	else if (is_string(_pattern))
+	{
+		return (_patternMap[? _pattern] != undefined);
+	}
+	
+	return false;
 }

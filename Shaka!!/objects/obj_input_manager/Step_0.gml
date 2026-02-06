@@ -1,10 +1,10 @@
 if (!instance_exists(rhythm_engine)) exit;
-if (!instance_exists(obj_game_controller)) exit;
-if (obj_game_controller.game_state != "playing") exit;
-if (obj_game_controller.is_paused) exit;
+if (!instance_exists(obj_game_manager)) exit;
+if (obj_game_manager.game_state != "playing") exit;
+if (obj_game_manager.is_paused) exit;
 
 // Get current time (with calibration offset)
-var _current_time_ms = obj_game_controller.current_time_ms + input_offset_ms;
+var _current_time_ms = obj_game_manager.current_time_ms + input_offset_ms;
 
 // Check each position for input
 check_position_input(NOTE_POSITION_SHAKATTO.HIGH_LEFT,	INPUT_VERB.HIGH_LEFT	, _current_time_ms);

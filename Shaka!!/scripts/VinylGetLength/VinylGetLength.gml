@@ -11,21 +11,21 @@
 
 function VinylGetLength(_voice, _adjustForPitch = false)
 {
-    if (_voice == undefined) return 0;
-    
-    var _result = __VinylEnsureSoundVoice(_voice).__GetAsset();
-    if (is_array(_result))
-    {
-        if (array_length(_result) <= 0) return 0;
-        _result = _result[0];
-    }
-    
-    if (_adjustForPitch)
-    {
-        return audio_sound_length(_result) / max(0.0001, audio_sound_get_pitch(_result));
-    }
-    else
-    {
-        return audio_sound_length(_result);
-    }
+	if (_voice == undefined) return 0;
+	
+	var _result = __VinylEnsureSoundVoice(_voice).__GetAsset();
+	if (is_array(_result))
+	{
+		if (array_length(_result) <= 0) return 0;
+		_result = _result[0];
+	}
+	
+	if (_adjustForPitch)
+	{
+		return audio_sound_length(_result) / max(0.0001, audio_sound_get_pitch(_result));
+	}
+	else
+	{
+		return audio_sound_length(_result);
+	}
 }

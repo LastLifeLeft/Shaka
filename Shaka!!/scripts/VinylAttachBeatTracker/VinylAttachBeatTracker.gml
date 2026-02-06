@@ -11,5 +11,5 @@
 
 function VinylAttachBeatTracker(_voice, _beginOnBeat = false)
 {
-    return __VinylEnsureBeatTracker(_voice, _beginOnBeat);
+	return __VinylEnsureBeatTracker(_voice, _beginOnBeat);
 }

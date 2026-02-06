@@ -126,145 +126,145 @@ function get_rating_score(_rating, _is_double) {
 /// @function Chart
 /// @description Constructor for a chart/beatmap
 function Chart() constructor {
-    // Metadata
-    title = "Unknown";
-    artist = "Unknown";
-    bpm = 120;
-    offset_ms = 0;
-    audio_file = "";
-    
-    // Notes array
-    notes = [];
-    
-    // Runtime state
-    current_note_index = 0;
-    total_notes = 0;
-    
-    /// @function load_from_json(json_string)
-    /// @description Load chart from JSON string
-    /// @param {string} json_string The JSON data
-    static load_from_json = function(_json_string) {
-        try {
-            var _data = json_parse(_json_string);
-            
-            // Load metadata
-            if (variable_struct_exists(_data, "metadata")) {
-                var _meta = _data.metadata;
-                
-                if (variable_struct_exists(_meta, "title")) title = _meta.title;
-                if (variable_struct_exists(_meta, "artist")) artist = _meta.artist;
-                if (variable_struct_exists(_meta, "bpm")) bpm = _meta.bpm;
-                if (variable_struct_exists(_meta, "offset_ms")) offset_ms = _meta.offset_ms;
-                if (variable_struct_exists(_meta, "audio_file")) audio_file = _meta.audio_file;
-            }
-            
-            // Load notes
-            if (variable_struct_exists(_data, "notes")) {
-                var _notes_array = _data.notes;
-                notes = [];
-                
-                for (var i = 0; i < array_length(_notes_array); i++) {
-                    var _note_data = _notes_array[i];
-                    
-                    var _note = {
-                        beat: _note_data.beat,
-                        position: _note_data.position,
-                        type: _note_data.type,
-                        time_ms: 0,  // Will be calculated
-                        hit: false,
-                        rating: NOTE_RATING.MISS,
-                    };
-                    
-                    // Calculate timing based on BPM
-                    // time = (beat / bpm) * 60000 ms + offset
-                    _note.time_ms = (_note.beat / bpm) * 60000 + offset_ms;
-                    
-                    array_push(notes, _note);
-                }
-                
-                total_notes = array_length(notes);
-                
-                // Sort notes by time
-                array_sort(notes, function(_a, _b) {
-                    return _a.time_ms - _b.time_ms;
-                });
-            }
-            
-            show_debug_message($"Chart loaded: {title} by {artist}");
-            show_debug_message($"BPM: {bpm}, Notes: {total_notes}");
-            
-            return true;
-            
-        } catch (_error) {
-            show_debug_message($"Error loading chart: {_error.message}");
-            return false;
-        }
-    }
-    
-    /// @function load_from_file(filename)
-    /// @description Load chart from file
-    /// @param {string} filename Path to chart file
-    static load_from_file = function(_filename) {
-        if (!file_exists(_filename)) {
-            show_debug_message($"Chart file not found: {_filename}");
-            return false;
-        }
-        
-        var _file = file_text_open_read(_filename);
-        var _json = "";
-        
-        while (!file_text_eof(_file)) {
-            _json += file_text_readln(_file);
-        }
-        
-        file_text_close(_file);
-        
-        return load_from_json(_json);
-    }
-    
-    /// @function get_next_note(current_time_ms)
-    /// @description Get the next note that should spawn
-    /// @param {real} current_time_ms Current song time in milliseconds
-    /// @return {struct|undefined} Next note or undefined if none
-    static get_next_note = function(_current_time_ms) {
-        // Account for approach time - spawn notes before they should be hit
-        var _spawn_time = _current_time_ms + (NOTE_APPROACH_TIME * 1000);
-        
-        while (current_note_index < total_notes) {
-            var _note = notes[current_note_index];
-            
-            if (_note.time_ms <= _spawn_time && !_note.spawned) {
-                _note.spawned = true;
-                current_note_index++;
-                return _note;
-            } else {
-                break;
-            }
-        }
-        
-        return undefined;
-    }
-    
-    /// @function reset()
-    /// @description Reset chart to beginning
-    static reset = function() {
-        current_note_index = 0;
-        
-        // Reset all notes
-        for (var i = 0; i < total_notes; i++) {
-            notes[i].hit = false;
-            notes[i].spawned = false;
-            notes[i].rating = NOTE_RATING.MISS;
-        }
-    }
-    
-    /// @function get_progress()
-    /// @description Get chart completion progress (0 to 1)
-    /// @return {real} Progress from 0 to 1
-    static get_progress = function() {
-        if (total_notes == 0) return 0;
-        return current_note_index / total_notes;
-    }
+	// Metadata
+	title = "Unknown";
+	artist = "Unknown";
+	bpm = 120;
+	offset_ms = 0;
+	audio_file = "";
+	
+	// Notes array
+	notes = [];
+	
+	// Runtime state
+	current_note_index = 0;
+	total_notes = 0;
+	
+	/// @function load_from_json(json_string)
+	/// @description Load chart from JSON string
+	/// @param {string} json_string The JSON data
+	static load_from_json = function(_json_string) {
+		try {
+			var _data = json_parse(_json_string);
+			
+			// Load metadata
+			if (variable_struct_exists(_data, "metadata")) {
+				var _meta = _data.metadata;
+				
+				if (variable_struct_exists(_meta, "title")) title = _meta.title;
+				if (variable_struct_exists(_meta, "artist")) artist = _meta.artist;
+				if (variable_struct_exists(_meta, "bpm")) bpm = _meta.bpm;
+				if (variable_struct_exists(_meta, "offset_ms")) offset_ms = _meta.offset_ms;
+				if (variable_struct_exists(_meta, "audio_file")) audio_file = _meta.audio_file;
+			}
+			
+			// Load notes
+			if (variable_struct_exists(_data, "notes")) {
+				var _notes_array = _data.notes;
+				notes = [];
+				
+				for (var i = 0; i < array_length(_notes_array); i++) {
+					var _note_data = _notes_array[i];
+					
+					var _note = {
+						beat: _note_data.beat,
+						position: _note_data.position,
+						type: _note_data.type,
+						time_ms: 0,  // Will be calculated
+						hit: false,
+						rating: NOTE_RATING.MISS,
+					};
+					
+					// Calculate timing based on BPM
+					// time = (beat / bpm) * 60000 ms + offset
+					_note.time_ms = (_note.beat / bpm) * 60000 + offset_ms;
+					
+					array_push(notes, _note);
+				}
+				
+				total_notes = array_length(notes);
+				
+				// Sort notes by time
+				array_sort(notes, function(_a, _b) {
+					return _a.time_ms - _b.time_ms;
+				});
+			}
+			
+			show_debug_message($"Chart loaded: {title} by {artist}");
+			show_debug_message($"BPM: {bpm}, Notes: {total_notes}");
+			
+			return true;
+			
+		} catch (_error) {
+			show_debug_message($"Error loading chart: {_error.message}");
+			return false;
+		}
+	}
+	
+	/// @function load_from_file(filename)
+	/// @description Load chart from file
+	/// @param {string} filename Path to chart file
+	static load_from_file = function(_filename) {
+		if (!file_exists(_filename)) {
+			show_debug_message($"Chart file not found: {_filename}");
+			return false;
+		}
+		
+		var _file = file_text_open_read(_filename);
+		var _json = "";
+		
+		while (!file_text_eof(_file)) {
+			_json += file_text_readln(_file);
+		}
+		
+		file_text_close(_file);
+		
+		return load_from_json(_json);
+	}
+	
+	/// @function get_next_note(current_time_ms)
+	/// @description Get the next note that should spawn
+	/// @param {real} current_time_ms Current song time in milliseconds
+	/// @return {struct|undefined} Next note or undefined if none
+	static get_next_note = function(_current_time_ms) {
+		// Account for approach time - spawn notes before they should be hit
+		var _spawn_time = _current_time_ms + (NOTE_APPROACH_TIME * 1000);
+		
+		while (current_note_index < total_notes) {
+			var _note = notes[current_note_index];
+			
+			if (_note.time_ms <= _spawn_time && !_note.spawned) {
+				_note.spawned = true;
+				current_note_index++;
+				return _note;
+			} else {
+				break;
+			}
+		}
+		
+		return undefined;
+	}
+	
+	/// @function reset()
+	/// @description Reset chart to beginning
+	static reset = function() {
+		current_note_index = 0;
+		
+		// Reset all notes
+		for (var i = 0; i < total_notes; i++) {
+			notes[i].hit = false;
+			notes[i].spawned = false;
+			notes[i].rating = NOTE_RATING.MISS;
+		}
+	}
+	
+	/// @function get_progress()
+	/// @description Get chart completion progress (0 to 1)
+	/// @return {real} Progress from 0 to 1
+	static get_progress = function() {
+		if (total_notes == 0) return 0;
+		return current_note_index / total_notes;
+	}
 }
 
 /// @function chart_load(filename)
@@ -272,13 +272,13 @@ function Chart() constructor {
 /// @param {string} filename Path to chart file
 /// @return {Chart|undefined} Loaded chart or undefined if failed
 function chart_load(_filename) {
-    var _chart = new Chart();
-    
-    if (_chart.load_from_file(_filename)) {
-        return _chart;
-    }
-    
-    return undefined;
+	var _chart = new Chart();
+	
+	if (_chart.load_from_file(_filename)) {
+		return _chart;
+	}
+	
+	return undefined;
 }
 
 
@@ -299,21 +299,21 @@ function chart_load(_filename) {
 /// @param {real} position NOTE_POSITION enum value (0-5)
 /// @param {string} type Note type ("normal", "double", "shake")
 function NoteData(_beat, _position, _type) constructor {
-    beat = _beat;                    // Musical beat
-    position = _position;            // Which pad (0-5)
-    type = _type;                    // "normal", "double", "shake"
-    time_ms = 0;                     // Calculated from BPM (set by chart loader)
-    
-    // State tracking
-    spawned = false;                 // Has this note been spawned as an instance?
-    hit = false;                     // Was this note hit?
-    rating = NOTE_RATING.MISS;       // What rating did it get?
-    
-    /// @function calculate_time(bpm, offset_ms)
-    /// @description Calculate the time_ms from beat and BPM
-    static calculate_time = function(_bpm, _offset_ms = 0) {
-        time_ms = (beat / _bpm) * 60000 + _offset_ms;
-    }
+	beat = _beat;					// Musical beat
+	position = _position;			// Which pad (0-5)
+	type = _type;					// "normal", "double", "shake"
+	time_ms = 0;					 // Calculated from BPM (set by chart loader)
+	
+	// State tracking
+	spawned = false;				 // Has this note been spawned as an instance?
+	hit = false;					 // Was this note hit?
+	rating = NOTE_RATING.MISS;	   // What rating did it get?
+	
+	/// @function calculate_time(bpm, offset_ms)
+	/// @description Calculate the time_ms from beat and BPM
+	static calculate_time = function(_bpm, _offset_ms = 0) {
+		time_ms = (beat / _bpm) * 60000 + _offset_ms;
+	}
 }
 
 /// @function HighwayContext(center_x, center_y, radius, mode)
@@ -323,35 +323,23 @@ function NoteData(_beat, _position, _type) constructor {
 /// @param {real} radius Distance from center to pads
 /// @param {real} mode GAME_MODE enum value
 function HighwayContext(_center_x, _center_y, _radius, _mode) constructor {
-    center_x = _center_x;
-    center_y = _center_y;
-    radius = _radius;
-    mode = _mode;
-    
-    /// @function get_pad_x(position)
-    /// @description Get the X coordinate of a pad
-    static get_pad_x = function(_position) {
-        return get_position_x(_position, radius, center_x, mode);
-    }
-    
-    /// @function get_pad_y(position)
-    /// @description Get the Y coordinate of a pad
-    static get_pad_y = function(_position) {
-        return get_position_y(_position, radius, center_y, mode);
-    }
+	center_x = _center_x;
+	center_y = _center_y;
+	radius = _radius;
+	mode = _mode;
+	
+	/// @function get_pad_x(position)
+	/// @description Get the X coordinate of a pad
+	static get_pad_x = function(_position) {
+		return get_position_x(_position, radius, center_x, mode);
+	}
+	
+	/// @function get_pad_y(position)
+	/// @description Get the Y coordinate of a pad
+	static get_pad_y = function(_position) {
+		return get_position_y(_position, radius, center_y, mode);
+	}
 }
-
-/// @function NoteInstance(note_data, highway_context, engine)
-/// @description Configuration data passed to obj_note on creation
-/// @param {NoteData} note_data The chart note data
-/// @param {HighwayContext} highway_context Highway position/mode info
-/// @param {instance} engine Reference to the rhythm engine
-function NoteInstance(_note_data, _highway_context, _engine) constructor {
-    note_data = _note_data;
-    highway = _highway_context;
-    engine = _engine;
-}
-
 
 // ============================================================================
 // RHYTHM ENGINE → NOTE INTERFACE
@@ -365,25 +353,25 @@ function NoteInstance(_note_data, _highway_context, _engine) constructor {
 /// note_config = undefined;  // Will be set by engine
 /// 
 /// if (note_config != undefined) {
-///     note_init(note_config);
+///	 note_init(note_config);
 /// }
 function note_init(_config) {
-    // Store references (called from obj_note)
-    note_data = _config.note_data;
-    highway = _config.highway;
-    rhythm_engine = _config.engine;
-    
-    // Calculate movement
-    current_distance = NOTE_SPAWN_DISTANCE;
-    target_distance = highway.radius;
-    approach_speed = (target_distance - current_distance) / (NOTE_APPROACH_TIME * game_get_speed(gamespeed_fps));
-    
-    // Visual setup
-    note_color = get_position_color(note_data.position);
-    note_alpha = 1.0;
-    
-    // State
-    initialized = true;
+	// Store references (called from obj_note)
+	note_data = _config.note_data;
+	highway = _config.highway;
+	rhythm_engine = _config.engine;
+	
+	// Calculate movement
+	current_distance = NOTE_SPAWN_DISTANCE;
+	target_distance = highway.radius;
+	approach_speed = (target_distance - current_distance) / (NOTE_APPROACH_TIME * game_get_speed(gamespeed_fps));
+	
+	// Visual setup
+	note_color = get_position_color(note_data.position);
+	note_alpha = 1.0;
+	
+	// State
+	initialized = true;
 }
 
 
@@ -398,12 +386,12 @@ function note_init(_config) {
 ///
 /// USAGE IN obj_rhythm_engine:
 /// rhythm_engine_report_hit = function(_note, _rating) {
-///     register_hit(_note, _rating);
+///	 register_hit(_note, _rating);
 /// }
 function rhythm_engine_report_hit(_note, _rating) {
-    // This is called from obj_note to report a hit
-    // Implementation in obj_rhythm_engine
-    show_debug_message($"Note hit: {get_rating_name(_rating)}");
+	// This is called from obj_note to report a hit
+	// Implementation in obj_rhythm_engine
+	show_debug_message($"Note hit: {get_rating_name(_rating)}");
 }
 
 /// @function rhythm_engine_report_miss(note_instance)
@@ -412,12 +400,12 @@ function rhythm_engine_report_hit(_note, _rating) {
 ///
 /// USAGE IN obj_rhythm_engine:
 /// rhythm_engine_report_miss = function(_note) {
-///     register_miss(_note);
+///	 register_miss(_note);
 /// }
 function rhythm_engine_report_miss(_note) {
-    // This is called from obj_note when it goes past deadline
-    // Implementation in obj_rhythm_engine
-    show_debug_message("Note missed");
+	// This is called from obj_note when it goes past deadline
+	// Implementation in obj_rhythm_engine
+	show_debug_message("Note missed");
 }
 
 
@@ -431,9 +419,9 @@ function rhythm_engine_report_miss(_note) {
 /// @param {real} pad_radius Target pad radius
 /// @return {bool} True if past deadline
 function note_is_past_deadline(_distance, _radius) {
-    var _distance_past = _distance - _radius;
-    var _max_miss_distance = (TIMING_OK / 1000) * (_radius / NOTE_APPROACH_TIME);
-    return _distance_past > _max_miss_distance;
+	var _distance_past = _distance - _radius;
+	var _max_miss_distance = (TIMING_OK / 1000) * (_radius / NOTE_APPROACH_TIME);
+	return _distance_past > _max_miss_distance;
 }
 
 /// @function calculate_note_rating(time_diff_ms)
@@ -441,10 +429,10 @@ function note_is_past_deadline(_distance, _radius) {
 /// @param {real} time_diff_ms Absolute time difference in milliseconds
 /// @return {real} NOTE_RATING enum value
 function calculate_note_rating(_time_diff) {
-    var _abs_diff = abs(_time_diff);
-    
-    if (_abs_diff <= TIMING_PERFECT) return NOTE_RATING.PERFECT;
-    if (_abs_diff <= TIMING_GOOD) return NOTE_RATING.GOOD;
-    if (_abs_diff <= TIMING_OK) return NOTE_RATING.OK;
-    return NOTE_RATING.MISS;
+	var _abs_diff = abs(_time_diff);
+	
+	if (_abs_diff <= TIMING_PERFECT) return NOTE_RATING.PERFECT;
+	if (_abs_diff <= TIMING_GOOD) return NOTE_RATING.GOOD;
+	if (_abs_diff <= TIMING_OK) return NOTE_RATING.OK;
+	return NOTE_RATING.MISS;
 }

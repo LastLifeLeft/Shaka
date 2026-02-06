@@ -6,15 +6,15 @@
 
 function VinylGetLoop(_voice)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (_voiceStruct == undefined)
-    {
-        return (_voice != undefined)? audio_sound_get_loop(_voice) : false;
-    }
-    else
-    {
-        return _voiceStruct.__GetLoop();
-    }
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (_voiceStruct == undefined)
+	{
+		return (_voice != undefined)? audio_sound_get_loop(_voice) : false;
+	}
+	else
+	{
+		return _voiceStruct.__GetLoop();
+	}
 }

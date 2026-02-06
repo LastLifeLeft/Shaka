@@ -3,8 +3,8 @@ if (chart == undefined) exit;
 if (highway_context == undefined) exit;
 
 // Get current time from game controller
-if (instance_exists(obj_game_controller)) {
-    current_time_ms = obj_game_controller.current_time_ms;
+if (instance_exists(obj_game_manager)) {
+	current_time_ms = obj_game_manager.current_time_ms;
 }
 
 // Spawn notes that are ready

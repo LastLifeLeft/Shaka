@@ -16,35 +16,35 @@
 
 function VinylSetupMix(_mixName, _baseGain = 1, _membersLoop = undefined, _membersDuckOn = undefined, _membersEmitterAlias = undefined, _metadata = undefined)
 {
-    static _system   = __VinylSystem();
-    static _mixDict  = _system.__mixDict;
-    static _mixArray = _system.__mixArray;
-    
-    if (is_array(_baseGain))
-    {
-        __VinylError("Cannot use an array as a mix gain");
-    }
-    
-    if (_mixName == VINYL_NO_MIX)
-    {
-        __VinylError("Cannot set up a new mix with the same name as VINYL_NO_MIX (\"", VINYL_NO_MIX, "\")");
-    }
-    
-    //Update an existing pattern if possible, otherwise make a new pattern
-    var _existingPattern = _mixDict[$ _mixName];
-    if (_existingPattern != undefined)
-    {
-        _existingPattern.__UpdateSetup(_baseGain, _membersLoop, _membersDuckOn, _metadata);
-    }
-    else
-    {
-        var _mixStruct = new __VinylClassMix(_mixName, _baseGain, _membersLoop, _membersDuckOn, _membersEmitterAlias, _metadata);
-        _mixDict[$ _mixName] = _mixStruct;
-        array_push(_mixArray, _mixStruct);
-    }
-    
-    if (VINYL_LIVE_EDIT && (not _system.__importingJSON))
-    {
-        __VinylResolveChanges(false);
-    }
+	static _system   = __VinylSystem();
+	static _mixDict  = _system.__mixDict;
+	static _mixArray = _system.__mixArray;
+	
+	if (is_array(_baseGain))
+	{
+		__VinylError("Cannot use an array as a mix gain");
+	}
+	
+	if (_mixName == VINYL_NO_MIX)
+	{
+		__VinylError("Cannot set up a new mix with the same name as VINYL_NO_MIX (\"", VINYL_NO_MIX, "\")");
+	}
+	
+	//Update an existing pattern if possible, otherwise make a new pattern
+	var _existingPattern = _mixDict[$ _mixName];
+	if (_existingPattern != undefined)
+	{
+		_existingPattern.__UpdateSetup(_baseGain, _membersLoop, _membersDuckOn, _metadata);
+	}
+	else
+	{
+		var _mixStruct = new __VinylClassMix(_mixName, _baseGain, _membersLoop, _membersDuckOn, _membersEmitterAlias, _metadata);
+		_mixDict[$ _mixName] = _mixStruct;
+		array_push(_mixArray, _mixStruct);
+	}
+	
+	if (VINYL_LIVE_EDIT && (not _system.__importingJSON))
+	{
+		__VinylResolveChanges(false);
+	}
 }

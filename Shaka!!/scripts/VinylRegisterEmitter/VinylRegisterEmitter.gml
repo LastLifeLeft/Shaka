@@ -9,7 +9,7 @@
 
 function VinylRegisterEmitter(_emitter, _alias)
 {
-    static _emitterMap = __VinylSystem().__emitterMap;
-    
-    _emitterMap[? _alias] = _emitter;
+	static _emitterMap = __VinylSystem().__emitterMap;
+	
+	_emitterMap[? _alias] = _emitter;
 }

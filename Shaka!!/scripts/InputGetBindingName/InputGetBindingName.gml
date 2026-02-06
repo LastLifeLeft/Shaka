@@ -5,7 +5,7 @@
 /// cannot be found, this function will return `missingBindingName` (which is `"???"` by default).
 /// 
 /// N.B. This function is provided for basic binding naming and is suitable for debugging or
-///      alpha-quality games. Please use the "Binding Icons" plug-in for a higher quality system.
+///	  alpha-quality games. Please use the "Binding Icons" plug-in for a higher quality system.
 /// 
 /// @param {Any} binding
 /// @param {Boolean} forGamepad
@@ -123,15 +123,15 @@
 
 function InputGetBindingName(_binding, _forGamepad, _missingBindingName = "???")
 {
-    static _gamepadButtonNameLookup = __InputSystem().__gamepadButtonNameLookup;
-    static _kbmBindingNameMap       = __InputSystem().__kbmBindingNameMap;
-    
-    if (_forGamepad)
-    {
-        return _gamepadButtonNameLookup[? _binding] ?? _missingBindingName;
-    }
-    else
-    {
-        return _kbmBindingNameMap[? _binding] ?? chr(_binding);
-    }
+	static _gamepadButtonNameLookup = __InputSystem().__gamepadButtonNameLookup;
+	static _kbmBindingNameMap	   = __InputSystem().__kbmBindingNameMap;
+	
+	if (_forGamepad)
+	{
+		return _gamepadButtonNameLookup[? _binding] ?? _missingBindingName;
+	}
+	else
+	{
+		return _kbmBindingNameMap[? _binding] ?? chr(_binding);
+	}
 }

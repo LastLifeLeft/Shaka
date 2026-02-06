@@ -14,21 +14,21 @@
 
 function VinylDuckerCheck(_name, _priority)
 {
-    static _duckerDict = __VinylSystem().__duckerDict;
-    
-    var _duckerStruct = _duckerDict[$ _duckerName];
-    if (_duckerStruct == undefined) return undefined;
-    
-    if (_priority > _duckerStruct.__maxPriority)
-    {
-        return 2;
-    }
-    else if (_priority == _duckerStruct.__maxPriority)
-    {
-        return 1;
-    }
-    else // (_priority < _duckerStruct.__maxPriority)
-    {
-        return 0;
-    }
+	static _duckerDict = __VinylSystem().__duckerDict;
+	
+	var _duckerStruct = _duckerDict[$ _duckerName];
+	if (_duckerStruct == undefined) return undefined;
+	
+	if (_priority > _duckerStruct.__maxPriority)
+	{
+		return 2;
+	}
+	else if (_priority == _duckerStruct.__maxPriority)
+	{
+		return 1;
+	}
+	else // (_priority < _duckerStruct.__maxPriority)
+	{
+		return 0;
+	}
 }

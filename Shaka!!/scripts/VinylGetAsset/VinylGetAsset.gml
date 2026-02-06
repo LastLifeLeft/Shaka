@@ -8,7 +8,7 @@
 
 function VinylGetAsset(_voice)
 {
-    if (_voice == undefined) return undefined;
-    
-    return __VinylEnsureSoundVoice(_voice).__GetAsset();
+	if (_voice == undefined) return undefined;
+	
+	return __VinylEnsureSoundVoice(_voice).__GetAsset();
 }

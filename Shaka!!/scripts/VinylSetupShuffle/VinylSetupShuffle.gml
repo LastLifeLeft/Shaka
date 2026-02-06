@@ -25,70 +25,70 @@
 
 function VinylSetupShuffle(_patternName, _soundArray, _gain = undefined, _pitch = undefined, _loop = undefined, _mixName = VINYL_DEFAULT_MIX, _duckerName = undefined, _duckPrio = undefined, _emitterAlias = undefined, _bpm = undefined, _metadata = undefined)
 {
-    static _system     = __VinylSystem();
-    static _patternMap = _system.__patternMap;
-    
-    if (_gain == undefined)
-    {
-        var _gainMin = 1;
-        var _gainMax = 1;
-    }
-    else if (is_array(_gain))
-    {
-        if (array_length(_gain) == 2)
-        {
-            var _gainMin = _gain[0];
-            var _gainMax = _gain[1];
-        }
-        else
-        {
-            __VinylError("Array length for gain argument must be 2 (found ", array_length(_gain), ")");
-        }
-    }
-    else
-    {
-        var _gainMin = _gain;
-        var _gainMax = _gain;
-    }
-    
-    if (_pitch == undefined)
-    {
-        var _pitchMin = 1;
-        var _pitchMax = 1;
-    }
-    else if (is_array(_pitch))
-    {
-        if (array_length(_pitch) == 2)
-        {
-            var _pitchMin = _pitch[0];
-            var _pitchMax = _pitch[1];
-        }
-        else
-        {
-            __VinylError("Array length for pitch argument must be 2 (found ", array_length(_pitch), ")");
-        }
-    }
-    else
-    {
-        var _pitchMin = _pitch;
-        var _pitchMax = _pitch;
-    }
-    
-    if (_mixName == VINYL_NO_MIX) _mixName = undefined;
-    
-    //Update an existing pattern if possible, otherwise make a new pattern
-    var _existingPattern = _patternMap[? _patternName];
-    if (_existingPattern != undefined)
-    {
-        _existingPattern.__UpdateSetup(_soundArray, _gainMin, _gainMax, _pitchMin, _pitchMax, _loop, _mixName, _duckerName, _duckPrio, _emitterAlias, _bpm, _metadata);
-    }
-    else
-    {
-        _patternMap[? _patternName] = new __VinylClassPatternShuffle(_patternName, _soundArray, _gainMin, _gainMax, _pitchMin, _pitchMax, _loop, _mixName, _duckerName, _duckPrio, _emitterAlias, _bpm, _metadata);
-    }
-    
-    if (VINYL_LIVE_EDIT && (not _system.__importingJSON))
-    {
-        __VinylResolveChanges(false);
-    }
+	static _system	 = __VinylSystem();
+	static _patternMap = _system.__patternMap;
+	
+	if (_gain == undefined)
+	{
+		var _gainMin = 1;
+		var _gainMax = 1;
+	}
+	else if (is_array(_gain))
+	{
+		if (array_length(_gain) == 2)
+		{
+			var _gainMin = _gain[0];
+			var _gainMax = _gain[1];
+		}
+		else
+		{
+			__VinylError("Array length for gain argument must be 2 (found ", array_length(_gain), ")");
+		}
+	}
+	else
+	{
+		var _gainMin = _gain;
+		var _gainMax = _gain;
+	}
+	
+	if (_pitch == undefined)
+	{
+		var _pitchMin = 1;
+		var _pitchMax = 1;
+	}
+	else if (is_array(_pitch))
+	{
+		if (array_length(_pitch) == 2)
+		{
+			var _pitchMin = _pitch[0];
+			var _pitchMax = _pitch[1];
+		}
+		else
+		{
+			__VinylError("Array length for pitch argument must be 2 (found ", array_length(_pitch), ")");
+		}
+	}
+	else
+	{
+		var _pitchMin = _pitch;
+		var _pitchMax = _pitch;
+	}
+	
+	if (_mixName == VINYL_NO_MIX) _mixName = undefined;
+	
+	//Update an existing pattern if possible, otherwise make a new pattern
+	var _existingPattern = _patternMap[? _patternName];
+	if (_existingPattern != undefined)
+	{
+		_existingPattern.__UpdateSetup(_soundArray, _gainMin, _gainMax, _pitchMin, _pitchMax, _loop, _mixName, _duckerName, _duckPrio, _emitterAlias, _bpm, _metadata);
+	}
+	else
+	{
+		_patternMap[? _patternName] = new __VinylClassPatternShuffle(_patternName, _soundArray, _gainMin, _gainMax, _pitchMin, _pitchMax, _loop, _mixName, _duckerName, _duckPrio, _emitterAlias, _bpm, _metadata);
+	}
+	
+	if (VINYL_LIVE_EDIT && (not _system.__importingJSON))
+	{
+		__VinylResolveChanges(false);
+	}
 }

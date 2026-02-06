@@ -4,7 +4,7 @@
 /// parameters defines the name of the verb when exported with InputBindingsExport().
 ///
 /// N.B. Care should be taken not to change export names between savefile versions or the library
-///      will not be able to import old bindings from savefiles etc.
+///	  will not be able to import old bindings from savefiles etc.
 /// 
 /// Bindings can be specifed in one of the following ways:
 /// 
@@ -23,26 +23,26 @@
 
 function InputDefineVerb(_verbIndex, _exportName, _kbmBinding, _gamepadBinding, _metadata = {})
 {
-    static _system = __InputSystem();
-    
-    if (GM_build_type == "run")
-    {
-        if not (_system.__verbDefineAllowed)
-        {
-            __InputError("InputDefineVerb() must only be called in __InputConfigVerbs()");
-        }
-    }
-    
-    with(_system)
-    {
-        var _definition = new __InputClassVerbDefinition(_verbIndex, _exportName, _kbmBinding, _gamepadBinding, _metadata);
-        
-        __verbDefinitionArray[@ _verbIndex]   = _definition;
-        __verbExportNameDict[$ _exportName] = _definition;
-        
-        if (array_get_index(__verbDefIndexArray, _verbIndex) < 0)
-        {
-            array_push(__verbDefIndexArray, _verbIndex);
-        }
-    }
+	static _system = __InputSystem();
+	
+	if (GM_build_type == "run")
+	{
+		if not (_system.__verbDefineAllowed)
+		{
+			__InputError("InputDefineVerb() must only be called in __InputConfigVerbs()");
+		}
+	}
+	
+	with(_system)
+	{
+		var _definition = new __InputClassVerbDefinition(_verbIndex, _exportName, _kbmBinding, _gamepadBinding, _metadata);
+		
+		__verbDefinitionArray[@ _verbIndex]   = _definition;
+		__verbExportNameDict[$ _exportName] = _definition;
+		
+		if (array_get_index(__verbDefIndexArray, _verbIndex) < 0)
+		{
+			array_push(__verbDefIndexArray, _verbIndex);
+		}
+	}
 }

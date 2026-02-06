@@ -9,18 +9,18 @@
 
 function VinylSetLoop(_voice, _state)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (_voiceStruct == undefined)
-    {
-        if (_voice != undefined)
-        {
-            return audio_sound_loop(_voice, _state);
-        }
-    }
-    else
-    {
-        return _voiceStruct.__SetLoop(_state);
-    }
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (_voiceStruct == undefined)
+	{
+		if (_voice != undefined)
+		{
+			return audio_sound_loop(_voice, _state);
+		}
+	}
+	else
+	{
+		return _voiceStruct.__SetLoop(_state);
+	}
 }

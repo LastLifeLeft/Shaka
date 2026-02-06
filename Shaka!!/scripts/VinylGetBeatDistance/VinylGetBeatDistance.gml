@@ -11,14 +11,14 @@
 
 function VinylGetBeatDistance(_voice, _realtime = true)
 {
-    var _trackerStruct = __VinylEnsureBeatTracker(_voice, false);
-    
-    var _distance = _trackerStruct.__beatDistance;
-    
-    if (_realtime)
-    {
-        _distance *= 60 / (__VinylEnsureSoundVoice(_voice).__GetBPM() ?? 1);
-    }
-    
-    return _distance;
+	var _trackerStruct = __VinylEnsureBeatTracker(_voice, false);
+	
+	var _distance = _trackerStruct.__beatDistance;
+	
+	if (_realtime)
+	{
+		_distance *= 60 / (__VinylEnsureSoundVoice(_voice).__GetBPM() ?? 1);
+	}
+	
+	return _distance;
 }

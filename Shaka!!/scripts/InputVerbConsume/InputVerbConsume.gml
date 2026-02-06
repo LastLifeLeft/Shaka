@@ -9,24 +9,24 @@
 
 function InputVerbConsume(_verbIndex, _playerIndex = 0)
 {
-    static _playerArray = __InputSystemPlayerArray();
-    
-    __INPUT_VALIDATE_PLAYER_INDEX
-    
-    with(_playerArray[_playerIndex])
-    {
-        if (array_get_index(__consumedArray, __verbStateArray[_verbIndex]) < 0)
-        {
-            array_push(__consumedArray, __verbStateArray[_verbIndex]);
-        }
-        
-        with(__verbStateArray[_verbIndex])
-        {
-            __prevHeld   = false;
-            __held       = false;
-            __valueRaw   = 0;
-            __valueClamp = 0;
-            __pressFrame = -infinity;
-        }
-    }
+	static _playerArray = __InputSystemPlayerArray();
+	
+	__INPUT_VALIDATE_PLAYER_INDEX
+	
+	with(_playerArray[_playerIndex])
+	{
+		if (array_get_index(__consumedArray, __verbStateArray[_verbIndex]) < 0)
+		{
+			array_push(__consumedArray, __verbStateArray[_verbIndex]);
+		}
+		
+		with(__verbStateArray[_verbIndex])
+		{
+			__prevHeld   = false;
+			__held	   = false;
+			__valueRaw   = 0;
+			__valueClamp = 0;
+			__pressFrame = -infinity;
+		}
+	}
 }

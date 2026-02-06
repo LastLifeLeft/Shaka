@@ -23,9 +23,9 @@
 
 //Default values to use for `VinylPlayAt()`. See GameMaker documentation for `audio_play_sound_at()`
 //more information.
-#macro VINYL_DEFAULT_FALLOFF_DIST      0
+#macro VINYL_DEFAULT_FALLOFF_DIST	  0
 #macro VINYL_DEFAULT_FALLOFF_MAX_DIST  100
-#macro VINYL_DEFAULT_FALLOFF_FACTOR    1
+#macro VINYL_DEFAULT_FALLOFF_FACTOR	1
 
 //The name to use to indicate no mix. This should be a unique string and cannot be used for the
 //name of mixes when calling VinylSetupMix() or VinylSetupImportJSON().

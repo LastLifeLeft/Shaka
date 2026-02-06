@@ -9,10 +9,10 @@
 
 function VinylGetBlendMemberGain(_voice, _index)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return undefined;
-    
-    return _voiceStruct.__GetMemberGain(_index);
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return undefined;
+	
+	return _voiceStruct.__GetMemberGain(_index);
 }

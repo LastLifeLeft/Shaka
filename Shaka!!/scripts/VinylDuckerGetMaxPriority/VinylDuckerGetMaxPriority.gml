@@ -7,10 +7,10 @@
 
 function VinylDuckerGetMaxPriority(_duckerName)
 {
-    static _duckerDict = __VinylSystem().__duckerDict;
-    
-    var _duckerStruct = _duckerDict[$ _duckerName];
-    if (_duckerStruct == undefined) return -infinity;
-    
-    return _duckerStruct.__maxPriority;
+	static _duckerDict = __VinylSystem().__duckerDict;
+	
+	var _duckerStruct = _duckerDict[$ _duckerName];
+	if (_duckerStruct == undefined) return -infinity;
+	
+	return _duckerStruct.__maxPriority;
 }

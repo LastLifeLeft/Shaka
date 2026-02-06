@@ -10,26 +10,26 @@
 
 function VinylPatternIsPlaying(_pattern)
 {
-    static _patternMap = __VinylSystem().__patternMap;
-    
-    if (is_handle(_pattern))
-    {
-        return audio_is_playing(_pattern);
-    }
-    else if (is_string(_pattern))
-    {
-        var _patternStruct = _patternMap[? _pattern];
-        if (_patternStruct != undefined)
-        {
-            return _patternStruct.__IsSoundPlaying();
-        }
-        else
-        {
-            __VinylError("Pattern \"", _pattern, "\" not found");
-        }
-    }
-    else
-    {
-        __VinylError("Datatype not supported (", typeof(_pattern), ")");
-    }
+	static _patternMap = __VinylSystem().__patternMap;
+	
+	if (is_handle(_pattern))
+	{
+		return audio_is_playing(_pattern);
+	}
+	else if (is_string(_pattern))
+	{
+		var _patternStruct = _patternMap[? _pattern];
+		if (_patternStruct != undefined)
+		{
+			return _patternStruct.__IsSoundPlaying();
+		}
+		else
+		{
+			__VinylError("Pattern \"", _pattern, "\" not found");
+		}
+	}
+	else
+	{
+		__VinylError("Datatype not supported (", typeof(_pattern), ")");
+	}
 }

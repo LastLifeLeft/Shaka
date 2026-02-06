@@ -24,19 +24,19 @@ patterns.
 Here is an example of a simple Vinyl JSON:
 
 [
-    {
-        "sound": "sndCat",
-        "gain": 2
-    },
-    {
-        "sound": "sndBleep1",
-        "pitch": 0.6,
-    },
-    {
-        "shuffle": "Footsteps",
-        "pitch": [0.9, 1.1],
-        "sounds": ["sndFootstep0", "sndFootstep1", "sndFootstep2", "sndFootstep3"]
-    }
+	{
+		"sound": "sndCat",
+		"gain": 2
+	},
+	{
+		"sound": "sndBleep1",
+		"pitch": 0.6,
+	},
+	{
+		"shuffle": "Footsteps",
+		"pitch": [0.9, 1.1],
+		"sounds": ["sndFootstep0", "sndFootstep1", "sndFootstep2", "sndFootstep3"]
+	}
 }
 
 In this JSON we see three Vinyl definitions. Two of these resources are sound assets that have been
@@ -55,22 +55,22 @@ macro is set to VINYL_NO_MIX).
 Here is an example of a mix JSON definition:
 
 [
-    {
-        "mix": "music",
-        "baseGain": 1.1,
-        "members": [
-            {
-                "sound": "sndOverworld"
-            },
-            {
-                "sound": "sndBossFight"
-            }
-        ]
-    },
-    {
-        "sound": "sndWarning",
-        "pitch": [0.8, 1.2]
-    }
+	{
+		"mix": "music",
+		"baseGain": 1.1,
+		"members": [
+			{
+				"sound": "sndOverworld"
+			},
+			{
+				"sound": "sndBossFight"
+			}
+		]
+	},
+	{
+		"sound": "sndWarning",
+		"pitch": [0.8, 1.2]
+	}
 ]
 
 In this JSON we see four Vinyl definitions: three sounds and one mix. Two of these sounds,
@@ -84,89 +84,89 @@ is not placed inside a mix definition therefore it is assigned to the default mi
 
 Sounds:
 {
-    "sound": <sound asset>, required
-    "gain": <number> or <2-element array>, defaults to 1
-    "pitch": <number> or <2-element array>, defaults to 1
-    "loop": <boolean>, defaults to false
-    "duckOn": <ducker name>
-    "duckPrio", <number>, default to 0
-    "emitter", <string>, default to <undefined>, emitter must have been registered with VinylRegisterEmitter()
-    "metadata": <any>
+	"sound": <sound asset>, required
+	"gain": <number> or <2-element array>, defaults to 1
+	"pitch": <number> or <2-element array>, defaults to 1
+	"loop": <boolean>, defaults to false
+	"duckOn": <ducker name>
+	"duckPrio", <number>, default to 0
+	"emitter", <string>, default to <undefined>, emitter must have been registered with VinylRegisterEmitter()
+	"metadata": <any>
 }
 
 Shuffle Patterns:
 {
-    "shuffle": <pattern name>, required
-    "sounds": <array of sound assets, or wildcard pattern to match against>, required
-    "gain": <number> or <2-element array>, defaults to 1
-    "pitch": <number> or <2-element array>, defaults to 1
-    "duckOn": <ducker name>
-    "duckPrio", <number>, default to 0
-    "emitter", <string>, default to <undefined>, emitter must have been registered with VinylRegisterEmitter()
-    "metadata": <any>
+	"shuffle": <pattern name>, required
+	"sounds": <array of sound assets, or wildcard pattern to match against>, required
+	"gain": <number> or <2-element array>, defaults to 1
+	"pitch": <number> or <2-element array>, defaults to 1
+	"duckOn": <ducker name>
+	"duckPrio", <number>, default to 0
+	"emitter", <string>, default to <undefined>, emitter must have been registered with VinylRegisterEmitter()
+	"metadata": <any>
 }
 
 Head-Loop-Tail Patterns:
 {
-    "hlt": <pattern name>, required
-    "head": <sound asset>, optional, defaults to no asset
-    "loop": <sound asset>, required
-    "tail": <sound asset>, optional, defaults to no asset
-    "gain": <number>, defaults to 1
-    "duckOn": <ducker name>
-    "duckPrio", <number>, default to 0
-    "metadata": <any>
+	"hlt": <pattern name>, required
+	"head": <sound asset>, optional, defaults to no asset
+	"loop": <sound asset>, required
+	"tail": <sound asset>, optional, defaults to no asset
+	"gain": <number>, defaults to 1
+	"duckOn": <ducker name>
+	"duckPrio", <number>, default to 0
+	"metadata": <any>
 }
 
 Blend Patterns:
 {
-    "blend": <pattern name>, required
-    "sounds": <array of sound assets>, required
-    "loop": <boolean>, defaults to true
-    "gain": <number>, defaults to 1
-    "duckOn": <ducker name>
-    "duckPrio", <number>, default to 0
-    "metadata": <any>
+	"blend": <pattern name>, required
+	"sounds": <array of sound assets>, required
+	"loop": <boolean>, defaults to true
+	"gain": <number>, defaults to 1
+	"duckOn": <ducker name>
+	"duckPrio", <number>, default to 0
+	"metadata": <any>
 }
 
 Abstract Patterns:
 {
-    "abstract": <pattern name>, required
-    "gain": <number>, defaults to 1
-    "pitch": <number>, defaults to 1
-    "duckOn": <ducker name>
-    "duckPrio", <number>, default to 0
-    "metadata": <any>
+	"abstract": <pattern name>, required
+	"gain": <number>, defaults to 1
+	"pitch": <number>, defaults to 1
+	"duckOn": <ducker name>
+	"duckPrio", <number>, default to 0
+	"metadata": <any>
 }
 
 Queue Templates:
 {
-    "queueTemplate": <template name>, required
-    "sounds": <array of sound assets, or wildcard pattern to match against>, required
-    "behavior": <integer>, default to 0 (VINYL_QUEUE.DONT_LOOP)
-    "loopQueue": <boolean>, default to <false>
-    "emitter", <string>, default to <undefined>, emitter must have been registered with VinylRegisterEmitter()
+	"queueTemplate": <template name>, required
+	"sounds": <array of sound assets, or wildcard pattern to match against>, required
+	"behavior": <integer>, default to 0 (VINYL_QUEUE.DONT_LOOP)
+	"loopQueue": <boolean>, default to <false>
+	"emitter", <string>, default to <undefined>, emitter must have been registered with VinylRegisterEmitter()
 }
 
 Mixes:
 {
-    "mix": <mix name>, required
-    "baseGain": <number>, defaults to 1
-    "membersLoop": <boolean>, defaults to <undefined>
-    "members": <array of definitions>, defaults to no assets
-    "metadata": <any>
+	"mix": <mix name>, required
+	"baseGain": <number>, defaults to 1
+	"membersLoop": <boolean>, defaults to <undefined>
+	"members": <array of definitions>, defaults to no assets
+	"metadata": <any>
 }
 
 Duckers:
 {
-    "ducker": <ducker name>, required
-    "duckedGain": <number>, defaults to 1
-    "rateOfChange": <number>, defaults to 1
-    "samePriorityInterrupt": <boolean>, defaults to <true>
+	"ducker": <ducker name>, required
+	"duckedGain": <number>, defaults to 1
+	"rateOfChange": <number>, defaults to 1
+	"samePriorityInterrupt": <boolean>, defaults to <true>
 }
 
 Global Metadata:
 {
-    "metadata": <mix name>, required
-    "data": <any>, required
+	"metadata": <mix name>, required
+	"data": <any>, required
 }

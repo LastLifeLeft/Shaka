@@ -7,10 +7,10 @@
 
 function VinylGetBlendMemberCount(_voice)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return 0;
-    
-    return _voiceStruct.__voiceCount;
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return 0;
+	
+	return _voiceStruct.__voiceCount;
 }

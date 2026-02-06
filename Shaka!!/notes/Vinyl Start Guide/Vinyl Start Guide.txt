@@ -25,9 +25,9 @@ you've defined. Vinyl offers multiple ways to manipulate the audio data it holds
 the idea being that different use cases will want a different interface for setting up audio. There
 are three ways to interact with Vinyl's audio data:
 
-    1. On boot, call some VinylSetup*() functions to create patterns
-    2. Edit __VinylConfigJSON() to define patterns
-    3. Store some JSON externally and call VinylSetupImportJSON() to import that JSON
+	1. On boot, call some VinylSetup*() functions to create patterns
+	2. Edit __VinylConfigJSON() to define patterns
+	3. Store some JSON externally and call VinylSetupImportJSON() to import that JSON
 
 You can combine these in any way you want but for the sake of simplicity I'd stick to one approach.
 
@@ -59,9 +59,9 @@ will be able to modify the contents of __VinylConfigJSON() at runtime and hear t
 great for quickly fixing problems without having to reboot the game.
 
 N.B. The parser that I wrote to handle live update for __VinylConfigJSON() is very simple and
-     cannot handle most GML syntax. If you intend to use the live updating feature you should
-     treat the JSON written in this file as "pure JSON" and you should not use functions,
-     conditionals, if-statements, or any logic at all.
+	 cannot handle most GML syntax. If you intend to use the live updating feature you should
+	 treat the JSON written in this file as "pure JSON" and you should not use functions,
+	 conditionals, if-statements, or any logic at all.
 
 
 

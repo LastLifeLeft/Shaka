@@ -16,23 +16,23 @@
 
 function InputPlayerSetDevice(_device, _playerIndex = 0)
 {
-    static _system = __InputSystem();
-    static _playerArray = __InputSystemPlayerArray();
-    
-    __INPUT_VALIDATE_PLAYER_INDEX
-    
-    if (_system.__hotswap)
-    {
-        if ((_playerIndex != 0) && (_device != INPUT_NO_DEVICE))
-        {
-            __InputError($"Cannot set player {_playerIndex} device to {_device}, hotswap mode is enabled");
-        }
-    }
-    
-    var _oldDevice = _playerArray[_playerIndex].__device;
-    
-    //Don't do any work if the device hasn't changed
-    if (_oldDevice == _device) return;
-    
-    __InputPlugInExecuteCallbacks(INPUT_PLUG_IN_CALLBACK.PLAYER_DEVICE_CHANGED, _playerIndex, _oldDevice, _device);
+	static _system = __InputSystem();
+	static _playerArray = __InputSystemPlayerArray();
+	
+	__INPUT_VALIDATE_PLAYER_INDEX
+	
+	if (_system.__hotswap)
+	{
+		if ((_playerIndex != 0) && (_device != INPUT_NO_DEVICE))
+		{
+			__InputError($"Cannot set player {_playerIndex} device to {_device}, hotswap mode is enabled");
+		}
+	}
+	
+	var _oldDevice = _playerArray[_playerIndex].__device;
+	
+	//Don't do any work if the device hasn't changed
+	if (_oldDevice == _device) return;
+	
+	__InputPlugInExecuteCallbacks(INPUT_PLUG_IN_CALLBACK.PLAYER_DEVICE_CHANGED, _playerIndex, _oldDevice, _device);
 }

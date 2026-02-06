@@ -11,6 +11,6 @@
 
 function VinylSetPitch(_voice, _pitch, _rateOfChange = infinity)
 {
-    if (_voice == undefined) return;
-    __VinylEnsureSoundVoice(_voice).__SetLocalPitch(max(0.001, _pitch), max(0.001, _rateOfChange));
+	if (_voice == undefined) return;
+	__VinylEnsureSoundVoice(_voice).__SetLocalPitch(max(0.001, _pitch), max(0.001, _rateOfChange));
 }

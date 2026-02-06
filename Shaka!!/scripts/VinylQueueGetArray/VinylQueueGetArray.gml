@@ -9,10 +9,10 @@
 
 function VinylQueueGetArray(_voice)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
-    
-    return variable_clone(_voiceStruct.__soundArray);
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
+	
+	return variable_clone(_voiceStruct.__soundArray);
 }

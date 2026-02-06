@@ -10,10 +10,10 @@
 
 function VinylSetBlendAnimCurve(_voice, _animCurve, _factor = undefined)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return undefined;
-    
-    return _voiceStruct.__SetBlendAnimCurve(_animCurve, _factor);
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return undefined;
+	
+	return _voiceStruct.__SetBlendAnimCurve(_animCurve, _factor);
 }

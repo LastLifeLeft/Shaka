@@ -7,15 +7,15 @@
 
 function VinylWillStop(_voice)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (_voiceStruct == undefined)
-    {
-        return __VinylWillStop(_voice);
-    }
-    else
-    {
-        return _voiceStruct.__WillStop();
-    }
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (_voiceStruct == undefined)
+	{
+		return __VinylWillStop(_voice);
+	}
+	else
+	{
+		return _voiceStruct.__WillStop();
+	}
 }

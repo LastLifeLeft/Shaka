@@ -10,18 +10,18 @@
 
 function VinylQueueSetArray(_voice, _soundArray)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
-    
-    with(_voiceStruct)
-    {
-        __soundArray = variable_clone(_soundArray);
-        
-        if (__behaviour == VINYL_QUEUE.LOOP_ON_LAST)
-        {
-            audio_sound_loop(__voiceCurrent, (array_length(__soundArray) <= 0));
-        }
-    }
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
+	
+	with(_voiceStruct)
+	{
+		__soundArray = variable_clone(_soundArray);
+		
+		if (__behaviour == VINYL_QUEUE.LOOP_ON_LAST)
+		{
+			audio_sound_loop(__voiceCurrent, (array_length(__soundArray) <= 0));
+		}
+	}
 }

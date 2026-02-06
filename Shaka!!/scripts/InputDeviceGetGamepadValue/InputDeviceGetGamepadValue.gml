@@ -9,10 +9,10 @@
 
 function InputDeviceGetGamepadValue(_device, _binding)
 {
-    if (_device < 0) return 0;
-    if (not InputGameHasFocus()) return 0;
-    if (not InputDeviceIsConnected(_device)) return 0;
-    if (not gamepad_is_connected(_device)) return 0;
-    
-    return __InputGamepadGetReadArray(_device)[_binding - INPUT_GAMEPAD_BINDING_MIN](_device, _binding);
+	if (_device < 0) return 0;
+	if (not InputGameHasFocus()) return 0;
+	if (not InputDeviceIsConnected(_device)) return 0;
+	if (not gamepad_is_connected(_device)) return 0;
+	
+	return __InputGamepadGetReadArray(_device)[_binding - INPUT_GAMEPAD_BINDING_MIN](_device, _binding);
 }

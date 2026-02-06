@@ -8,10 +8,10 @@
 
 function VinylQueueContains(_voice, _sound)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
-    
-    return ((_voiceStruct.__soundCurrent == _sound) || array_contains(_voiceStruct.__soundArray, _sound));
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceQueue)) return undefined;
+	
+	return ((_voiceStruct.__soundCurrent == _sound) || array_contains(_voiceStruct.__soundArray, _sound));
 }

@@ -50,23 +50,23 @@ enum PP_DISPLAY_MODE
 
 enum PP_SPLIT
 {
-	NONE,           // Single player (1x1 grid)
+	NONE,		   // Single player (1x1 grid)
 	
 	// 2 Players
-	VERTICAL_2,     // Side by side
+	VERTICAL_2,	 // Side by side
 	HORIZONTAL_2,   // Stacked
 	
 	// 3 Players
-	COLUMNS_3,      // Three columns
-	ROWS_2_1,       // Two on top, one full-width bottom
-	GRID_2X2_3,     // 2x2 grid with bottom-right empty
+	COLUMNS_3,	  // Three columns
+	ROWS_2_1,	   // Two on top, one full-width bottom
+	GRID_2X2_3,	 // 2x2 grid with bottom-right empty
 	
 	// 4 Players
-	COLUMNS_4,      // Four columns
-	GRID_2X2,       // 2x2 grid
+	COLUMNS_4,	  // Four columns
+	GRID_2X2,	   // 2x2 grid
 	
 	// 5-8 Players
-	GRID_4X2        // 4x2 grid, fills left-to-right, top-to-bottom
+	GRID_4X2		// 4x2 grid, fills left-to-right, top-to-bottom
 }
 
 #endregion
@@ -384,7 +384,7 @@ splitview_get_at_position = function(_screen_x, _screen_y)
 		var _sv = splitview[_i];
 		
 		if (_screen_x >= _sv.window_x && _screen_x < _sv.window_x + _sv.window_w &&
-		    _screen_y >= _sv.window_y && _screen_y < _sv.window_y + _sv.window_h)
+			_screen_y >= _sv.window_y && _screen_y < _sv.window_y + _sv.window_h)
 		{
 			return _i;
 		}
@@ -495,7 +495,7 @@ splitview_calculate_layouts = function()
 
 /// @func splitview_apply_view(_splitview)
 /// @desc Applies splitview settings to GameMaker's view system.
-///       Each view renders to its own surface at (0,0) to eliminate rounding errors.
+///	   Each view renders to its own surface at (0,0) to eliminate rounding errors.
 /// @param {Struct} _splitview - Splitview struct
 splitview_apply_view = function(_splitview)
 {
@@ -508,7 +508,7 @@ splitview_apply_view = function(_splitview)
 		_splitview.surface = surface_create(_surf_w, _surf_h);
 	}
 	else if (surface_get_width(_splitview.surface) != _surf_w || 
-	         surface_get_height(_splitview.surface) != _surf_h)
+			 surface_get_height(_splitview.surface) != _surf_h)
 	{
 		surface_resize(_splitview.surface, _surf_w, _surf_h);
 	}
@@ -644,7 +644,7 @@ splitview_cleanup_surfaces = function()
 /// @return {Real} Splitview index (0-based) or -1 if not over any splitview
 splitview_mouse_get_index = function()
 {
-    return splitview_get_at_position(window_mouse_get_x(), window_mouse_get_y());
+	return splitview_get_at_position(window_mouse_get_x(), window_mouse_get_y());
 };
 
 /// @func splitview_mouse_in_bounds(_index)
@@ -653,14 +653,14 @@ splitview_mouse_get_index = function()
 /// @return {Bool}
 splitview_mouse_in_bounds = function(_index)
 {
-    if (_index < 0 || _index >= array_length(splitview)) return false;
-    
-    var _sv = splitview[_index];
-    var _mx = window_mouse_get_x();
-    var _my = window_mouse_get_y();
-    
-    return (_mx >= _sv.window_x && _mx < _sv.window_x + _sv.window_w &&
-            _my >= _sv.window_y && _my < _sv.window_y + _sv.window_h);
+	if (_index < 0 || _index >= array_length(splitview)) return false;
+	
+	var _sv = splitview[_index];
+	var _mx = window_mouse_get_x();
+	var _my = window_mouse_get_y();
+	
+	return (_mx >= _sv.window_x && _mx < _sv.window_x + _sv.window_w &&
+			_my >= _sv.window_y && _my < _sv.window_y + _sv.window_h);
 };
 
 /// @func splitview_mouse_get_position(_index)
@@ -669,34 +669,34 @@ splitview_mouse_in_bounds = function(_index)
 /// @return {Struct|undefined} { x, y } in world coordinates, or undefined if mouse is outside
 splitview_mouse_get_position = function(_index)
 {
-    if (_index < 0 || _index >= array_length(splitview)) return {x: - 32000, y: - 32000};
-    
-    var _sv = splitview[_index];
-    var _mx = window_mouse_get_x();
-    var _my = window_mouse_get_y();
-    
-    // Check bounds
-    if (_mx < _sv.window_x || _mx >= _sv.window_x + _sv.window_w ||
-        _my < _sv.window_y || _my >= _sv.window_y + _sv.window_h)
-    {
-        return {x: - 32000, y: - 32000};
-    }
-    
-    // Convert window coords to normalized position within splitview (0 to 1)
-    var _norm_x = (_mx - _sv.window_x) / _sv.window_w;
-    var _norm_y = (_my - _sv.window_y) / _sv.window_h;
-    
-    // Scale to view size and add camera offset
-    var _cam = view_camera[_sv.view_index];
-    var _cam_x = camera_get_view_x(_cam);
-    var _cam_y = camera_get_view_y(_cam);
-    var _cam_w = camera_get_view_width(_cam);
-    var _cam_h = camera_get_view_height(_cam);
-    
-    return {
-        x: _cam_x + (_norm_x * _cam_w),
-        y: _cam_y + (_norm_y * _cam_h)
-    };
+	if (_index < 0 || _index >= array_length(splitview)) return {x: - 32000, y: - 32000};
+	
+	var _sv = splitview[_index];
+	var _mx = window_mouse_get_x();
+	var _my = window_mouse_get_y();
+	
+	// Check bounds
+	if (_mx < _sv.window_x || _mx >= _sv.window_x + _sv.window_w ||
+		_my < _sv.window_y || _my >= _sv.window_y + _sv.window_h)
+	{
+		return {x: - 32000, y: - 32000};
+	}
+	
+	// Convert window coords to normalized position within splitview (0 to 1)
+	var _norm_x = (_mx - _sv.window_x) / _sv.window_w;
+	var _norm_y = (_my - _sv.window_y) / _sv.window_h;
+	
+	// Scale to view size and add camera offset
+	var _cam = view_camera[_sv.view_index];
+	var _cam_x = camera_get_view_x(_cam);
+	var _cam_y = camera_get_view_y(_cam);
+	var _cam_w = camera_get_view_width(_cam);
+	var _cam_h = camera_get_view_height(_cam);
+	
+	return {
+		x: _cam_x + (_norm_x * _cam_w),
+		y: _cam_y + (_norm_y * _cam_h)
+	};
 };
 
 /// @func splitview_mouse_get_x(_index)
@@ -705,8 +705,8 @@ splitview_mouse_get_position = function(_index)
 /// @return {Real|undefined} World X coordinate, or undefined if mouse is outside
 splitview_mouse_get_x = function(_index)
 {
-    var _pos = splitview_mouse_get_position(_index);
-    return (_pos != undefined) ? _pos.x : undefined;
+	var _pos = splitview_mouse_get_position(_index);
+	return (_pos != undefined) ? _pos.x : undefined;
 };
 
 /// @func splitview_mouse_get_y(_index)
@@ -715,8 +715,8 @@ splitview_mouse_get_x = function(_index)
 /// @return {Real|undefined} World Y coordinate, or undefined if mouse is outside
 splitview_mouse_get_y = function(_index)
 {
-    var _pos = splitview_mouse_get_position(_index);
-    return (_pos != undefined) ? _pos.y : undefined;
+	var _pos = splitview_mouse_get_position(_index);
+	return (_pos != undefined) ? _pos.y : undefined;
 };
 
 #endregion
@@ -731,23 +731,23 @@ splitview_get_window_rect = function(_index)
 {
 	if (_index < 0){
 		return {
-	        x: display_draw_x,
-	        y: display_draw_y,
-	        w: display_draw_w,
-	        h: display_draw_h
-	    };
+			x: display_draw_x,
+			y: display_draw_y,
+			w: display_draw_w,
+			h: display_draw_h
+		};
 	}
 	
-    if (_index >= array_length(splitview)) return undefined;
-    
-    var _sv = splitview[_index];
-    
-    return {
-        x: _sv.window_x,
-        y: _sv.window_y,
-        w: _sv.window_w,
-        h: _sv.window_h
-    };
+	if (_index >= array_length(splitview)) return undefined;
+	
+	var _sv = splitview[_index];
+	
+	return {
+		x: _sv.window_x,
+		y: _sv.window_y,
+		w: _sv.window_w,
+		h: _sv.window_h
+	};
 };
 
 /// @func splitview_world_to_window(_index, _world_x, _world_y)
@@ -758,33 +758,33 @@ splitview_get_window_rect = function(_index)
 /// @return {Struct|undefined} { x, y, in_bounds } in window coordinates, or undefined if invalid index
 splitview_world_to_window = function(_index, _world_x, _world_y)
 {
-    if (_index < 0 || _index >= array_length(splitview)) return undefined;
-    
-    var _sv = splitview[_index];
-    
-    // Get camera info
-    var _cam = view_camera[_sv.view_index];
-    var _cam_x = camera_get_view_x(_cam);
-    var _cam_y = camera_get_view_y(_cam);
-    var _cam_w = camera_get_view_width(_cam);
-    var _cam_h = camera_get_view_height(_cam);
-    
-    // Convert world coords to normalized position within camera view (0 to 1)
-    var _norm_x = (_world_x - _cam_x) / _cam_w;
-    var _norm_y = (_world_y - _cam_y) / _cam_h;
-    
-    // Scale to window coordinates
-    var _window_x = _sv.window_x + (_norm_x * _sv.window_w);
-    var _window_y = _sv.window_y + (_norm_y * _sv.window_h);
-    
-    // Check if position is within the splitview bounds
-    var _in_bounds = (_norm_x >= 0 && _norm_x <= 1 && _norm_y >= 0 && _norm_y <= 1);
-    
-    return {
-        x: _window_x,
-        y: _window_y,
-        in_bounds: _in_bounds
-    };
+	if (_index < 0 || _index >= array_length(splitview)) return undefined;
+	
+	var _sv = splitview[_index];
+	
+	// Get camera info
+	var _cam = view_camera[_sv.view_index];
+	var _cam_x = camera_get_view_x(_cam);
+	var _cam_y = camera_get_view_y(_cam);
+	var _cam_w = camera_get_view_width(_cam);
+	var _cam_h = camera_get_view_height(_cam);
+	
+	// Convert world coords to normalized position within camera view (0 to 1)
+	var _norm_x = (_world_x - _cam_x) / _cam_w;
+	var _norm_y = (_world_y - _cam_y) / _cam_h;
+	
+	// Scale to window coordinates
+	var _window_x = _sv.window_x + (_norm_x * _sv.window_w);
+	var _window_y = _sv.window_y + (_norm_y * _sv.window_h);
+	
+	// Check if position is within the splitview bounds
+	var _in_bounds = (_norm_x >= 0 && _norm_x <= 1 && _norm_y >= 0 && _norm_y <= 1);
+	
+	return {
+		x: _window_x,
+		y: _window_y,
+		in_bounds: _in_bounds
+	};
 };
 
 /// @func splitview_world_to_window_x(_index, _world_x, _world_y)
@@ -795,8 +795,8 @@ splitview_world_to_window = function(_index, _world_x, _world_y)
 /// @return {Real|undefined} Window X coordinate, or undefined if invalid index
 splitview_world_to_window_x = function(_index, _world_x, _world_y)
 {
-    var _pos = splitview_world_to_window(_index, _world_x, _world_y);
-    return (_pos != undefined) ? _pos.x : undefined;
+	var _pos = splitview_world_to_window(_index, _world_x, _world_y);
+	return (_pos != undefined) ? _pos.x : undefined;
 };
 
 /// @func splitview_world_to_window_y(_index, _world_x, _world_y)
@@ -807,8 +807,8 @@ splitview_world_to_window_x = function(_index, _world_x, _world_y)
 /// @return {Real|undefined} Window Y coordinate, or undefined if invalid index
 splitview_world_to_window_y = function(_index, _world_x, _world_y)
 {
-    var _pos = splitview_world_to_window(_index, _world_x, _world_y);
-    return (_pos != undefined) ? _pos.y : undefined;
+	var _pos = splitview_world_to_window(_index, _world_x, _world_y);
+	return (_pos != undefined) ? _pos.y : undefined;
 };
 
 /// @func splitview_draw_borders()
@@ -889,7 +889,7 @@ splitview_draw_borders = function()
 
 /// @func splitview_composite()
 /// @desc Composites all splitview surfaces onto application_surface.
-///       Called in Post Draw before drawing borders and final display.
+///	   Called in Post Draw before drawing borders and final display.
 splitview_composite = function()
 {
 	surface_set_target(application_surface);
@@ -903,9 +903,9 @@ splitview_composite = function()
 		// Ensure surface exists (recreate if lost)
 		if (!surface_exists(_sv.surface))
 		{
-		    _sv.surface = surface_create(_sv.screen_w, _sv.screen_h);
-		    view_set_surface_id(_sv.view_index, _sv.surface);
-		    continue;
+			_sv.surface = surface_create(_sv.screen_w, _sv.screen_h);
+			view_set_surface_id(_sv.view_index, _sv.surface);
+			continue;
 		}
 		
 		// Draw the splitview surface at its designated position on application_surface
@@ -1119,18 +1119,18 @@ gameframe_set_forced = function(_state)
 
 splitview_debug = function()
 {
-    var _sv = splitview[0];
-    var _cam = view_camera[_sv.view_index];
-    
-    show_debug_message("=== SPLITVIEW DEBUG ===");
-    show_debug_message("surface exists: " + string(surface_exists(_sv.surface)));
-    show_debug_message("surface id: " + string(_sv.surface));
-    show_debug_message("screen_w/h: " + string(_sv.screen_w) + " x " + string(_sv.screen_h));
-    show_debug_message("target_x/y: " + string(_sv.target_x) + ", " + string(_sv.target_y));
-    show_debug_message("camera id: " + string(_cam));
-    show_debug_message("camera pos: " + string(camera_get_view_x(_cam)) + ", " + string(camera_get_view_y(_cam)));
-    show_debug_message("camera size: " + string(camera_get_view_width(_cam)) + " x " + string(camera_get_view_height(_cam)));
-    show_debug_message("view_surface_id: " + string(view_get_surface_id(_sv.view_index)));
-    show_debug_message("view visible: " + string(view_visible[_sv.view_index]));
-    show_debug_message("========================");
+	var _sv = splitview[0];
+	var _cam = view_camera[_sv.view_index];
+	
+	show_debug_message("=== SPLITVIEW DEBUG ===");
+	show_debug_message("surface exists: " + string(surface_exists(_sv.surface)));
+	show_debug_message("surface id: " + string(_sv.surface));
+	show_debug_message("screen_w/h: " + string(_sv.screen_w) + " x " + string(_sv.screen_h));
+	show_debug_message("target_x/y: " + string(_sv.target_x) + ", " + string(_sv.target_y));
+	show_debug_message("camera id: " + string(_cam));
+	show_debug_message("camera pos: " + string(camera_get_view_x(_cam)) + ", " + string(camera_get_view_y(_cam)));
+	show_debug_message("camera size: " + string(camera_get_view_width(_cam)) + " x " + string(camera_get_view_height(_cam)));
+	show_debug_message("view_surface_id: " + string(view_get_surface_id(_sv.view_index)));
+	show_debug_message("view visible: " + string(view_visible[_sv.view_index]));
+	show_debug_message("========================");
 };

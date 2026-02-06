@@ -8,10 +8,10 @@
 
 function VinylGetBlendAnimCurve(_voice)
 {
-    static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
-    
-    var _voiceStruct = _voiceToStructMap[? _voice];
-    if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return undefined;
-    
-    return (_voiceStruct.__blendMode == __VINYL_BLEND_MODE_CURVE)? _voiceStruct.__blendAnimCurve : undefined;
+	static _voiceToStructMap = __VinylSystem().__voiceToStructMap;
+	
+	var _voiceStruct = _voiceToStructMap[? _voice];
+	if (not is_instanceof(_voiceStruct, __VinylClassVoiceBlend)) return undefined;
+	
+	return (_voiceStruct.__blendMode == __VINYL_BLEND_MODE_CURVE)? _voiceStruct.__blendAnimCurve : undefined;
 }

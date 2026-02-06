@@ -30,30 +30,30 @@
 
 function VinylSetupDucker(_duckerName, _duckedGain = 0, _rateOfChange = __VINYL_DEFAULT_DUCK_RATE_OF_GAIN, _samePriorityInterrupt = true)
 {
-    static _system    = __VinylSystem();
-    static _duckerDict  = _system.__duckerDict;
-    static _duckerArray = _system.__duckerArray;
-    
-    if (is_array(_duckedGain))
-    {
-        __VinylError("Cannot use an array as the ducked gain");
-    }
-    
-    //Update an existing pattern if possible, otherwise make a new pattern
-    var _existingPattern = _duckerDict[$ _duckerName];
-    if (_existingPattern != undefined)
-    {
-        _existingPattern.__UpdateSetup(_duckedGain, _rateOfChange, _samePriorityInterrupt);
-    }
-    else
-    {
-        var _duckerStruct = new __VinylClassDucker(_duckerName, _duckedGain, _rateOfChange, _samePriorityInterrupt);
-        _duckerDict[$ _duckerName] = _duckerStruct;
-        array_push(_duckerArray, _duckerStruct);
-    }
-    
-    if (VINYL_LIVE_EDIT && (not _system.__importingJSON))
-    {
-        __VinylResolveChanges(false);
-    }
+	static _system	= __VinylSystem();
+	static _duckerDict  = _system.__duckerDict;
+	static _duckerArray = _system.__duckerArray;
+	
+	if (is_array(_duckedGain))
+	{
+		__VinylError("Cannot use an array as the ducked gain");
+	}
+	
+	//Update an existing pattern if possible, otherwise make a new pattern
+	var _existingPattern = _duckerDict[$ _duckerName];
+	if (_existingPattern != undefined)
+	{
+		_existingPattern.__UpdateSetup(_duckedGain, _rateOfChange, _samePriorityInterrupt);
+	}
+	else
+	{
+		var _duckerStruct = new __VinylClassDucker(_duckerName, _duckedGain, _rateOfChange, _samePriorityInterrupt);
+		_duckerDict[$ _duckerName] = _duckerStruct;
+		array_push(_duckerArray, _duckerStruct);
+	}
+	
+	if (VINYL_LIVE_EDIT && (not _system.__importingJSON))
+	{
+		__VinylResolveChanges(false);
+	}
 }

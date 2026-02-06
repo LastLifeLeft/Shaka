@@ -24,19 +24,19 @@
 
 function InputDefineCluster(_clusterIndex, _verbUp, _verbRight, _verbDown, _verbLeft, _axisBiasFactor = 0, _axisBiasDiagonals = false, _metadata = {})
 {
-    static _system = __InputSystem();
-    
-    if (GM_build_type == "run")
-    {
-        if not (_system.__verbDefineAllowed)
-        {
-            __InputError("InputDefineCluster() must only be called in __InputConfigVerbs()");
-        }
-    }
-    
-    with(_system)
-    {
-        var _definition = new __InputClassClusterDefinition(_clusterIndex, _verbUp, _verbRight, _verbDown, _verbLeft, _axisBiasFactor, _axisBiasDiagonals, _metadata);
-        __clusterDefinitionArray[@ _clusterIndex] = _definition;
-    }
+	static _system = __InputSystem();
+	
+	if (GM_build_type == "run")
+	{
+		if not (_system.__verbDefineAllowed)
+		{
+			__InputError("InputDefineCluster() must only be called in __InputConfigVerbs()");
+		}
+	}
+	
+	with(_system)
+	{
+		var _definition = new __InputClassClusterDefinition(_clusterIndex, _verbUp, _verbRight, _verbDown, _verbLeft, _axisBiasFactor, _axisBiasDiagonals, _metadata);
+		__clusterDefinitionArray[@ _clusterIndex] = _definition;
+	}
 }
