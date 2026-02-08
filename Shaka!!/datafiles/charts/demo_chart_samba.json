@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "title": "Samba Rhythm",
+    "artist": "Classic Band",
+    "bpm": 140,
+    "offset_ms": 0,
+    "audio_file": "demo_track.ogg",
+    "mode": "SAMBA"
+  },
+  "difficulties": {
+    "normal": {
+      "rating": 4,
+      "notes": [
+        {"beat": 4.0, "position": 0, "type": "normal"},
+        {"beat": 4.5, "position": 3, "type": "normal"},
+        {"beat": 5.0, "position": 1, "type": "normal"},
+        {"beat": 5.5, "position": 4, "type": "normal"},
+        {"beat": 6.0, "position": 2, "type": "normal"},
+        {"beat": 6.5, "position": 5, "type": "normal"},
+        
+        {"beat": 8.0, "position": 0, "type": "normal"},
+        {"beat": 8.0, "position": 5, "type": "normal"},
+        {"beat": 8.5, "position": 1, "type": "normal"},
+        {"beat": 8.5, "position": 4, "type": "normal"},
+        {"beat": 9.0, "position": 2, "type": "normal"},
+        {"beat": 9.0, "position": 3, "type": "normal"}
+      ]
+    },
+    "hard": {
+      "rating": 9,
+      "notes": [
+        {"beat": 4.0, "position": 0, "type": "normal"},
+        {"beat": 4.0, "position": 3, "type": "normal"},
+        {"beat": 4.25, "position": 1, "type": "normal"},
+        {"beat": 4.25, "position": 4, "type": "normal"},
+        {"beat": 4.5, "position": 2, "type": "normal"},
+        {"beat": 4.5, "position": 5, "type": "normal"},
+        {"beat": 4.75, "position": 0, "type": "normal"},
+        {"beat": 4.75, "position": 3, "type": "normal"},
+        {"beat": 5.0, "position": 1, "type": "normal"},
+        {"beat": 5.0, "position": 4, "type": "normal"},
+        
+        {"beat": 6.0, "position": 0, "type": "normal"},
+        {"beat": 6.0, "position": 2, "type": "normal"},
+        {"beat": 6.0, "position": 5, "type": "normal"},
+        {"beat": 6.5, "position": 1, "type": "normal"},
+        {"beat": 6.5, "position": 3, "type": "normal"},
+        {"beat": 6.5, "position": 4, "type": "normal"},
+        {"beat": 7.0, "position": 0, "type": "normal"},
+        {"beat": 7.0, "position": 2, "type": "normal"},
+        {"beat": 7.0, "position": 5, "type": "normal"}
+      ]
+    }
+  }
+}

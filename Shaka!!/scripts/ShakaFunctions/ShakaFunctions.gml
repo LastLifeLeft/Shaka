@@ -120,8 +120,8 @@ function get_rating_score(_rating, _is_double) {
 
 
 
-/// @description Chart/Beatmap loader for Shaka
-/// Loads and parses JSON chart files
+/// @description Chart/Beatmap loader for Shaka - Updated with Mode & Difficulty Support
+/// Loads and parses JSON chart files with multiple difficulty levels
 
 /// @function Chart
 /// @description Constructor for a chart/beatmap
@@ -132,8 +132,22 @@ function Chart() constructor {
 	bpm = 120;
 	offset_ms = 0;
 	audio_file = "";
+	mode = GAME_MODE.SHAKATTO;  // Default mode
 	
-	// Notes array
+	// Difficulty data
+	difficulties = {
+		easy: undefined,
+		normal: undefined,
+		hard: undefined,
+		crazy: undefined
+	};
+	
+	available_difficulties = [];  // Array of DIFFICULTY enums that exist
+	
+	// Currently selected difficulty
+	current_difficulty = DIFFICULTY.NORMAL;
+	
+	// Notes array (from selected difficulty)
 	notes = [];
 	
 	// Runtime state
@@ -156,42 +170,60 @@ function Chart() constructor {
 				if (variable_struct_exists(_meta, "bpm")) bpm = _meta.bpm;
 				if (variable_struct_exists(_meta, "offset_ms")) offset_ms = _meta.offset_ms;
 				if (variable_struct_exists(_meta, "audio_file")) audio_file = _meta.audio_file;
+				
+				// Load mode
+				if (variable_struct_exists(_meta, "mode")) {
+					var _mode_str = string_upper(_meta.mode);
+					if (_mode_str == "SAMBA") {
+						mode = GAME_MODE.SAMBA;
+					} else if (_mode_str == "SHAKATTO") {
+						mode = GAME_MODE.SHAKATTO;
+					}
+				}
 			}
 			
-			// Load notes
-			if (variable_struct_exists(_data, "notes")) {
-				var _notes_array = _data.notes;
-				notes = [];
+			// Load difficulties
+			if (variable_struct_exists(_data, "difficulties")) {
+				var _diffs = _data.difficulties;
 				
-				for (var i = 0; i < array_length(_notes_array); i++) {
-					var _note_data = _notes_array[i];
-					
-					var _note = {
-						beat: _note_data.beat,
-						position: _note_data.position,
-						type: _note_data.type,
-						time_ms: 0,  // Will be calculated
-						hit: false,
-						rating: NOTE_RATING.MISS,
-					};
-					
-					// Calculate timing based on BPM
-					// time = (beat / bpm) * 60000 ms + offset
-					_note.time_ms = (_note.beat / bpm) * 60000 + offset_ms;
-					
-					array_push(notes, _note);
+				available_difficulties = [];
+				
+				// Load Easy
+				if (variable_struct_exists(_diffs, "easy")) {
+					difficulties.easy = load_difficulty_data(_diffs.easy);
+					array_push(available_difficulties, DIFFICULTY.EASY);
 				}
 				
-				total_notes = array_length(notes);
+				// Load Normal
+				if (variable_struct_exists(_diffs, "normal")) {
+					difficulties.normal = load_difficulty_data(_diffs.normal);
+					array_push(available_difficulties, DIFFICULTY.NORMAL);
+				}
 				
-				// Sort notes by time
-				array_sort(notes, function(_a, _b) {
-					return _a.time_ms - _b.time_ms;
-				});
+				// Load Hard
+				if (variable_struct_exists(_diffs, "hard")) {
+					difficulties.hard = load_difficulty_data(_diffs.hard);
+					array_push(available_difficulties, DIFFICULTY.HARD);
+				}
+				
+				// Load Crazy
+				if (variable_struct_exists(_diffs, "crazy")) {
+					difficulties.crazy = load_difficulty_data(_diffs.crazy);
+					array_push(available_difficulties, DIFFICULTY.CRAZY);
+				}
+				
+				// Set default difficulty (prefer Normal, fallback to first available)
+				if (has_difficulty(DIFFICULTY.NORMAL)) {
+					set_difficulty(DIFFICULTY.NORMAL);
+				} else if (array_length(available_difficulties) > 0) {
+					set_difficulty(available_difficulties[0]);
+				}
 			}
 			
 			show_debug_message($"Chart loaded: {title} by {artist}");
-			show_debug_message($"BPM: {bpm}, Notes: {total_notes}");
+			show_debug_message($"Mode: {mode == GAME_MODE.SAMBA ? "SAMBA" : "SHAKATTO"}");
+			show_debug_message($"BPM: {bpm}");
+			show_debug_message($"Available difficulties: {array_length(available_difficulties)}");
 			
 			return true;
 			
@@ -199,6 +231,53 @@ function Chart() constructor {
 			show_debug_message($"Error loading chart: {_error.message}");
 			return false;
 		}
+	}
+	
+	/// @function load_difficulty_data(diff_struct)
+	/// @description Parse difficulty data from JSON
+	/// @param {struct} diff_struct Difficulty data from JSON
+	/// @return {struct} Difficulty data structure
+	static load_difficulty_data = function(_diff_struct) {
+		var _diff_data = {
+			rating: 1,
+			notes: []
+		};
+		
+		// Load rating (1-12)
+		if (variable_struct_exists(_diff_struct, "rating")) {
+			_diff_data.rating = clamp(_diff_struct.rating, RATING_MIN, RATING_MAX);
+		}
+		
+		// Load notes
+		if (variable_struct_exists(_diff_struct, "notes")) {
+			var _notes_array = _diff_struct.notes;
+			
+			for (var i = 0; i < array_length(_notes_array); i++) {
+				var _note_json = _notes_array[i];
+				
+				var _note = {
+					beat: _note_json.beat,
+					position: _note_json.position,
+					type: _note_json.type,
+					time_ms: 0,  // Will be calculated
+					hit: false,
+					spawned: false,
+					rating: NOTE_RATING.MISS,
+				};
+				
+				// Calculate timing based on BPM
+				_note.time_ms = (_note.beat / bpm) * 60000 + offset_ms;
+				
+				array_push(_diff_data.notes, _note);
+			}
+			
+			// Sort notes by time
+			array_sort(_diff_data.notes, function(_a, _b) {
+				return _a.time_ms - _b.time_ms;
+			});
+		}
+		
+		return _diff_data;
 	}
 	
 	/// @function load_from_file(filename)
@@ -222,27 +301,65 @@ function Chart() constructor {
 		return load_from_json(_json);
 	}
 	
-	/// @function get_next_note(current_time_ms)
-	/// @description Get the next note that should spawn
-	/// @param {real} current_time_ms Current song time in milliseconds
-	/// @return {struct|undefined} Next note or undefined if none
-	static get_next_note = function(_current_time_ms) {
-		// Account for approach time - spawn notes before they should be hit
-		var _spawn_time = _current_time_ms + (NOTE_APPROACH_TIME * 1000);
-		
-		while (current_note_index < total_notes) {
-			var _note = notes[current_note_index];
-			
-			if (_note.time_ms <= _spawn_time && !_note.spawned) {
-				_note.spawned = true;
-				current_note_index++;
-				return _note;
-			} else {
-				break;
-			}
+	/// @function set_difficulty(difficulty)
+	/// @description Select which difficulty to use
+	/// @param {real} difficulty DIFFICULTY enum value
+	/// @return {bool} True if difficulty exists and was set
+	static set_difficulty = function(_difficulty) {
+		if (!has_difficulty(_difficulty)) {
+			show_debug_message($"Difficulty not available: {get_difficulty_name(_difficulty)}");
+			return false;
 		}
 		
+		current_difficulty = _difficulty;
+		
+		// Load notes from selected difficulty
+		var _diff_data = get_difficulty_data(_difficulty);
+		notes = _diff_data.notes;
+		total_notes = array_length(notes);
+		
+		// Reset playback state
+		current_note_index = 0;
+		
+		show_debug_message($"Difficulty set: {get_difficulty_name(_difficulty)} (Rating: {_diff_data.rating}, Notes: {total_notes})");
+		
+		return true;
+	}
+	
+	/// @function has_difficulty(difficulty)
+	/// @description Check if a difficulty level exists
+	/// @param {real} difficulty DIFFICULTY enum value
+	/// @return {bool} True if difficulty exists
+	static has_difficulty = function(_difficulty) {
+		for (var i = 0; i < array_length(available_difficulties); i++) {
+			if (available_difficulties[i] == _difficulty) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/// @function get_difficulty_data(difficulty)
+	/// @description Get difficulty data structure
+	/// @param {real} difficulty DIFFICULTY enum value
+	/// @return {struct} Difficulty data or undefined
+	static get_difficulty_data = function(_difficulty) {
+		switch (_difficulty) {
+			case DIFFICULTY.EASY: return difficulties.easy;
+			case DIFFICULTY.NORMAL: return difficulties.normal;
+			case DIFFICULTY.HARD: return difficulties.hard;
+			case DIFFICULTY.CRAZY: return difficulties.crazy;
+		}
 		return undefined;
+	}
+	
+	/// @function get_difficulty_rating(difficulty)
+	/// @description Get rating for a specific difficulty
+	/// @param {real} difficulty DIFFICULTY enum value (optional, defaults to current)
+	/// @return {real} Rating (1-12)
+	static get_difficulty_rating = function(_difficulty = current_difficulty) {
+		var _data = get_difficulty_data(_difficulty);
+		return _data != undefined ? _data.rating : 1;
 	}
 	
 	/// @function reset()
@@ -250,7 +367,7 @@ function Chart() constructor {
 	static reset = function() {
 		current_note_index = 0;
 		
-		// Reset all notes
+		// Reset all notes in current difficulty
 		for (var i = 0; i < total_notes; i++) {
 			notes[i].hit = false;
 			notes[i].spawned = false;
@@ -281,7 +398,33 @@ function chart_load(_filename) {
 	return undefined;
 }
 
+/// @function get_difficulty_name(difficulty)
+/// @description Get string name of difficulty
+/// @param {real} difficulty DIFFICULTY enum value
+/// @return {string} Difficulty name
+function get_difficulty_name(_difficulty) {
+	switch (_difficulty) {
+		case DIFFICULTY.EASY: return "EASY";
+		case DIFFICULTY.NORMAL: return "NORMAL";
+		case DIFFICULTY.HARD: return "HARD";
+		case DIFFICULTY.CRAZY: return "CRAZY";
+	}
+	return "UNKNOWN";
+}
 
+/// @function get_difficulty_color(difficulty)
+/// @description Get color for difficulty display
+/// @param {real} difficulty DIFFICULTY enum value
+/// @return {real} Color
+function get_difficulty_color(_difficulty) {
+	switch (_difficulty) {
+		case DIFFICULTY.EASY: return c_lime;     // Green
+		case DIFFICULTY.NORMAL: return c_yellow;  // Yellow
+		case DIFFICULTY.HARD: return c_orange;   // Orange
+		case DIFFICULTY.CRAZY: return c_red;     // Red
+	}
+	return c_white;
+}
 
 
 

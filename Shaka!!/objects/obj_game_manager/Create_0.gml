@@ -22,17 +22,18 @@ pause_start = 0;
 
 // Game mode
 game_mode = GAME_MODE.SHAKATTO;  // Can be changed before starting
+selected_difficulty = DIFFICULTY.NORMAL;
 
 // Results
 final_score = 0;
 results_calculated = false;
 
 // Getting things ready
-var _path = working_directory + "charts/demo_chart.json" // Temp test chart.
-	
-chart_path = _path;
-chart = chart_load(_path);
-	
+chart_path = working_directory + "charts/demo_chart_samba.json" // Temp test chart.
+chart = chart_load(chart_path);
+chart.set_difficulty(selected_difficulty);
+game_mode = chart.mode;
+
 if (chart == undefined) {
 	show_debug_message("ERROR: Failed to load chart!");
 	game_state = "error";

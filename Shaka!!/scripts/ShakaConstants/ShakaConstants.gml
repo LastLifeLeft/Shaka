@@ -23,28 +23,36 @@ enum NOTE_POSITION_SAMBA {
 
 // Note types
 enum NOTE_TYPE {
-	NORMAL,	 // Single note
-	DOUBLE,	 // Two positions at same time
-	SHAKE,	  // Shake gesture
+	NORMAL,		// Single note
+	DOUBLE,		// Two positions at same time
+	SHAKE,		// Shake gesture
 }
 
 // Game modes
 enum GAME_MODE {
-	SAMBA,	  // Vertical symmetry (original Samba de Amigo)
-	SHAKATTO,   // Horizontal symmetry (Shakatto Tambourine)
+	SAMBA,		// Vertical symmetry (original Samba de Amigo)
+	SHAKATTO,	// Horizontal symmetry (Shakatto Tambourine)
+}
+
+// Difficulty levels
+enum DIFFICULTY {
+	EASY,		// 1-3 rating
+	NORMAL,		// 4-7 rating
+	HARD,		// 8-10 rating
+	CRAZY		// 11-12 rating
 }
 
 // Hit ratings
 enum NOTE_RATING {
-	MISS,	   // Completely missed
-	OK,		 // Within OK window
-	GOOD,	   // Within good window
+	MISS,		// Completely missed
+	OK,			// Within OK window
+	GOOD,		// Within good window
 	PERFECT,	// Within perfect window
 }
 
 // Timing windows (in milliseconds, symmetric around note)
 #macro TIMING_PERFECT 80	// ±80ms
-#macro TIMING_GOOD 120	  // ±120ms
+#macro TIMING_GOOD 120		// ±120ms
 #macro TIMING_OK 180		// ±180ms
 
 // Scoring constants
@@ -55,10 +63,10 @@ enum NOTE_RATING {
 #macro SCORE_DOUBLE_MULTIPLIER 2.5
 
 // Combo multiplier thresholds
-#macro COMBO_TIER1 0   // 1x multiplier
-#macro COMBO_TIER2 10  // 2x multiplier
-#macro COMBO_TIER3 25  // 3x multiplier
-#macro COMBO_TIER4 50  // 4x multiplier
+#macro COMBO_TIER1 0	// 1x multiplier
+#macro COMBO_TIER2 10	// 2x multiplier
+#macro COMBO_TIER3 25	// 3x multiplier
+#macro COMBO_TIER4 50	// 4x multiplier
 
 // End-of-song bonuses
 #macro BONUS_FULL_COMBO 10000
@@ -71,10 +79,10 @@ enum NOTE_RATING {
 #macro NOTE_SIZE 32
 
 // Circular layout (Samba de Amigo style)
-#macro CIRCLE_CENTER_X 320	   // Center of screen
-#macro CIRCLE_CENTER_Y 180	   // Center of screen
+#macro CIRCLE_CENTER_X 320		// Center of screen
+#macro CIRCLE_CENTER_Y 180		// Center of screen
 #macro PAD_RADIUS 150			// Distance from center to pads
-#macro NOTE_SPAWN_DISTANCE 0	 // Notes spawn at center
+#macro NOTE_SPAWN_DISTANCE 0	// Notes spawn at center
 #macro NOTE_APPROACH_TIME 2.0	// Notes take 2 seconds to reach pads
 
 // Colors for positions
@@ -87,3 +95,7 @@ enum NOTE_RATING {
 #macro COLOR_SHAKE c_white
 #macro COLOR_DOUBLE c_orange
 
+// Difficulty rating ranges (for UI display)
+#macro RATING_MIN 1
+#macro RATING_MAX 12
+  

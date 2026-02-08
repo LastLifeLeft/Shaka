@@ -88,7 +88,8 @@
     {"link":"io.gamemaker.sdfshaders-1.0.0","name":"io.gamemaker.sdfshaders-1.0.0","path":"io.gamemaker.sdfshaders-1.0.0.yyp",},
   ],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"demo_chart.json","CopyToMask":-1,"filePath":"datafiles/charts","name":"demo_chart.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"demo_chart_samba.json","CopyToMask":-1,"filePath":"datafiles/charts","name":"demo_chart_samba.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"demo_chart_shakatto.json","CopyToMask":-1,"filePath":"datafiles/charts","name":"demo_chart_shakatto.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"demo_track.ogg","CopyToMask":-1,"filePath":"datafiles/charts","name":"demo_track.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"db_license.txt","CopyToMask":-1,"filePath":"datafiles","name":"db_license.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"gamecontrollerdb.txt","CopyToMask":0,"filePath":"datafiles","name":"gamecontrollerdb.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -624,7 +625,7 @@
     {"id":{"name":"spr_gameframe_pixel","path":"sprites/spr_gameframe_pixel/spr_gameframe_pixel.yy",},},
     {"id":{"name":"spr_resolution_test1","path":"sprites/spr_resolution_test1/spr_resolution_test1.yy",},},
     {"id":{"name":"spr_resolution_test2","path":"sprites/spr_resolution_test2/spr_resolution_test2.yy",},},
-    {"id":{"name":"spr_splash","path":"sprites/spr_splash/spr_splash.yy",},},
+    {"id":{"name":"spr_splash_pixel","path":"sprites/spr_splash_pixel/spr_splash_pixel.yy",},},
     {"id":{"name":"ts_resolution_test1","path":"tilesets/ts_resolution_test1/ts_resolution_test1.yy",},},
     {"id":{"name":"ts_resolution_test2","path":"tilesets/ts_resolution_test2/ts_resolution_test2.yy",},},
   ],

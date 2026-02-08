@@ -2,7 +2,7 @@
 
 // The maximum number of players that the library will permit. Setting this number higher will
 // incur a slight performance penalty.
-#macro INPUT_MAX_PLAYERS  4
+#macro INPUT_MAX_PLAYERS  2
 
 // Whether the library should perform extra checks to validate parameters for functions. This will
 // catch small mistakes but also incurs a performance penalty. If you want maximum speed from the

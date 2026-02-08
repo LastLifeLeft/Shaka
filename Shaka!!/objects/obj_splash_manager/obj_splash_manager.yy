@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_splash",
-    "path":"sprites/spr_splash/spr_splash.yy",
+    "name":"spr_splash_pixel",
+    "path":"sprites/spr_splash_pixel/spr_splash_pixel.yy",
   },
   "spriteMaskId":null,
   "visible":true,
