@@ -1,16 +1,19 @@
-// Draw key labels near each pad
+// Determine which labels to show based on current device
+var _using_gamepad = InputPlayerUsingGamepad(player_index);
+var _labels = _using_gamepad ? gamepad_labels : keyboard_labels;
+var _shake_label = _using_gamepad ? "RT = Shake" : "SPACE = Shake";
+
+// Draw key/button labels near each pad
 draw_set_font(fnt_default);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_set_alpha(0.8);
 
-var _labels = ["Q", "W", "E", "A", "S", "D"];
 var _label_distance = highway_radius + 35;
 
 for (var i = 0; i < 6; i++) {
 	var _color = get_position_color(i);
 	
-	// Get label position (slightly outside the pad)
 	var _label_x = get_position_x(i, _label_distance, x, mode);
 	var _label_y = get_position_y(i, _label_distance, y, mode);
 	
@@ -30,13 +33,15 @@ var _mode_text = mode == GAME_MODE.SAMBA ? "SAMBA MODE" : "SHAKATTO MODE";
 scribble($"[fa_center][c_white]{_mode_text}")
 	.draw(x, y - highway_radius - 50);
 
-// Draw "Press SPACE to Shake" hint
+// Draw shake hint
 draw_set_alpha(0.5);
-scribble("[fa_center][c_gray]SPACE = Shake")
-	.draw(NOTE_HIGHWAY_WIDTH / 2, NOTE_HIGHWAY_HEIGHT - 20);
+scribble($"[fa_center][c_gray]{_shake_label}")
+	.draw(x, y + highway_radius + 50);
 
-// Draw debug controls hint
-scribble("[fa_left][c_gray][scale,0.7]F1=Debug F2=Input F3=Timing F4=Windows")
-	.draw(10, NOTE_HIGHWAY_HEIGHT - 15);
+// Draw debug controls hint (only on P0's highway)
+if (player_index == 0) {
+	scribble("[fa_left][c_gray][scale,0.7]F1=Debug F2=Input F3=Timing F4=Windows")
+		.draw(10, NOTE_HIGHWAY_HEIGHT - 15);
+}
 
 draw_set_alpha(1.0);

@@ -2,6 +2,13 @@
 draw_set_font(fnt_default);
 draw_set_color(c_white);
 
+// Player label (for multiplayer)
+if (obj_game_manager.player_count >= 2) {
+	var _p_color = (player_index == 0) ? "c_aqua" : "c_fuchsia";
+	scribble($"[fa_left][{_p_color}]P{player_index + 1}")
+		.draw(10, 10);
+}
+
 // Score at top right
 scribble($"[fa_right]SCORE: [c_yellow]{total_score}")
 	.draw(630, 10);
@@ -56,7 +63,7 @@ scribble($"[fa_left][c_lime]Perfect: {perfect_count}  " +
 // Debug info (F1)
 if (keyboard_check(vk_f1)) {
 	draw_set_halign(fa_left);
-	var _debug = $"Time: {current_time_ms / 1000}s\n";
+	var _debug = $"P{player_index} Time: {current_time_ms / 1000}s\n";
 	_debug += $"Next note: {next_note_index}/{chart.total_notes}\n";
 	_debug += $"Active notes: {array_length(active_notes)}\n";
 	_debug += $"Combo: {current_combo} (max: {max_combo})";

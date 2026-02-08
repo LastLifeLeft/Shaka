@@ -2,7 +2,7 @@ if (!is_playing) exit;
 if (chart == undefined) exit;
 if (highway_context == undefined) exit;
 
-// Get current time from game controller
+// Get current time from game controller (shared master clock)
 if (instance_exists(obj_game_manager)) {
 	current_time_ms = obj_game_manager.current_time_ms;
 }

@@ -1,13 +1,10 @@
-// Don't draw if hit (unless showing hit effect)
 if (note_data.hit && !hit_effect) exit;
 
-// Calculate world position from distance and angle
 var _angle = get_position_angle(note_data.position, highway.mode);
 var _draw_x = highway.center_x + lengthdir_x(current_distance, _angle);
 var _draw_y = highway.center_y + lengthdir_y(current_distance, _angle);
 
 if (hit_effect) {
-	// Expand and fade out
 	var _progress = hit_effect_timer / hit_effect_duration;
 	draw_set_alpha(1.0 - _progress);
 	draw_circle_colour(_draw_x, _draw_y, NOTE_SIZE / 2 * (1.0 + _progress * 1.5), c_white, note_color, false);

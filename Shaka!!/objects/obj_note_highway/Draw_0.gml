@@ -1,3 +1,6 @@
+/////////////////////////
+// Draw Event
+/////////////////////////
 // Draw center circle (spawn point)
 draw_set_alpha(center_alpha);
 draw_set_color(c_white);
@@ -34,22 +37,18 @@ for (var i = 0; i < 6; i++) {
 if (keyboard_check(vk_f4)) {
 	draw_set_alpha(0.15);
 	
-	// Draw rings showing timing windows
 	var _perfect_dist = highway_radius * (TIMING_PERFECT / 1000) / NOTE_APPROACH_TIME;
 	var _good_dist = highway_radius * (TIMING_GOOD / 1000) / NOTE_APPROACH_TIME;
 	var _ok_dist = highway_radius * (TIMING_OK / 1000) / NOTE_APPROACH_TIME;
 	
-	// OK window (orange)
 	draw_set_color(c_orange);
 	draw_circle(x, y, highway_radius - _ok_dist, true);
 	draw_circle(x, y, highway_radius + _ok_dist, true);
 	
-	// Good window (yellow)
 	draw_set_color(c_yellow);
 	draw_circle(x, y, highway_radius - _good_dist, true);
 	draw_circle(x, y, highway_radius + _good_dist, true);
 	
-	// Perfect window (green)
 	draw_set_color(c_lime);
 	draw_circle(x, y, highway_radius - _perfect_dist, true);
 	draw_circle(x, y, highway_radius + _perfect_dist, true);

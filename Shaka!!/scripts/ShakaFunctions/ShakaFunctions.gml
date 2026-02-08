@@ -418,10 +418,10 @@ function get_difficulty_name(_difficulty) {
 /// @return {real} Color
 function get_difficulty_color(_difficulty) {
 	switch (_difficulty) {
-		case DIFFICULTY.EASY: return c_lime;     // Green
+		case DIFFICULTY.EASY: return c_lime;	 // Green
 		case DIFFICULTY.NORMAL: return c_yellow;  // Yellow
 		case DIFFICULTY.HARD: return c_orange;   // Orange
-		case DIFFICULTY.CRAZY: return c_red;     // Red
+		case DIFFICULTY.CRAZY: return c_red;	 // Red
 	}
 	return c_white;
 }

@@ -5,26 +5,32 @@ switch (game_state) {
 	case "playing":
 		if (!is_paused)
 		{
-			// Update song time
+			// Update song time (master clock — shared by all players)
 			current_time_ms = VinylGetTrackPosition(music_voice) * 1000;
 	
-			// Check if song complete
-			if (rhythm_engine.check_song_complete()) {
+			// Check if all players have finished
+			if (check_all_complete()) {
 				finish_song();
 			}
 	
-			// Also check if music finished (if using audio)
+			// Also check if music finished
 			if (music_voice != undefined && !VinylIsPlaying(music_voice)) {
-				// Give a bit of buffer time for last notes
-				if (array_length(rhythm_engine.active_notes) == 0) {
-					finish_song();
+				var _all_empty = true;
+				for (var _p = 0; _p < player_count; _p++) {
+					if (array_length(rhythm_engines[_p].active_notes) > 0) {
+						_all_empty = false;
+						break;
+					}
 				}
+				if (_all_empty) finish_song();
 			}
 		}
 		break;
 	case "finished":
 		if (!results_calculated) {
-			final_score = rhythm_engine.calculate_final_score();
+			for (var _p = 0; _p < player_count; _p++) {
+				final_scores[_p] = rhythm_engines[_p].calculate_final_score();
+			}
 			results_calculated = true;
 		}
 		
@@ -34,10 +40,9 @@ switch (game_state) {
 		break;
 }
 
-// Global pause toggle (ESC)
-if (InputPressed(INPUT_VERB.PAUSE)) {
+// Global pause toggle — Player 0 controls pause
+if (InputPressed(INPUT_VERB.PAUSE, 0)) {
 	if (game_state == "ready") {
-		// Return to menu
 		PP.transition_start(-1, PP_TRANSITION.FADE_OUT, {
 			duration: 300000,
 			destination: rm_mainmenu
@@ -45,6 +50,13 @@ if (InputPressed(INPUT_VERB.PAUSE)) {
 	}
 	else
 	{
+		toggle_pause();
+	}
+}
+
+// Player 2 can also pause
+if (player_count >= 2 && InputPressed(INPUT_VERB.PAUSE, 1)) {
+	if (game_state == "playing") {
 		toggle_pause();
 	}
 }
