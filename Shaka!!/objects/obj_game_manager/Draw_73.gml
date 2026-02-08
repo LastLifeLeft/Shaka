@@ -1,9 +1,5 @@
 // State-specific UI
 switch (game_state) {
-	case "loading":
-		draw_loading_ui();
-		break;
-		
 	case "ready":
 		draw_ready_ui();
 		break;

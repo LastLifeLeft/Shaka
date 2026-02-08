@@ -196,11 +196,6 @@ check_all_complete = function() {
 // =========================================================================
 // TEMPORARY DRAW FUNCTIONS
 // =========================================================================
-draw_loading_ui = function() {
-	scribble("[fa_center][c_white]Loading...")
-		.draw(NOTE_HIGHWAY_WIDTH / 2, NOTE_HIGHWAY_HEIGHT / 2);
-}
-
 draw_ready_ui = function() {
 	var _center_x = NOTE_HIGHWAY_WIDTH / 2;
 	var _center_y = NOTE_HIGHWAY_HEIGHT / 2;
