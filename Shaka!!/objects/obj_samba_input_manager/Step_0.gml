@@ -14,6 +14,3 @@ check_position_input(NOTE_POSITION_SHAKATTO.HIGH_RIGHT, INPUT_VERB.HIGH_RIGHT, _
 check_position_input(NOTE_POSITION_SHAKATTO.LOW_LEFT,   INPUT_VERB.LOW_LEFT,   _current_time_ms);
 check_position_input(NOTE_POSITION_SHAKATTO.LOW_MID,	INPUT_VERB.LOW_MID,	_current_time_ms);
 check_position_input(NOTE_POSITION_SHAKATTO.LOW_RIGHT,  INPUT_VERB.LOW_RIGHT,  _current_time_ms);
-
-// Check shake input
-check_shake_input(_current_time_ms);

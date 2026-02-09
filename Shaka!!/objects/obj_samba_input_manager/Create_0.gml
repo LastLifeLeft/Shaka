@@ -1,20 +1,9 @@
-// Player index — set by obj_game_manager at creation
-// Input 10 uses this to route to the correct device automatically:
-//   Player 0 → Keyboard/Mouse OR Gamepad 0
-//   Player 1 → Gamepad 1
-// player_index is set via instance creation variable
-
 // Input calibration (can be adjusted per input method)
 input_offset_ms = 0;
-
-// Input state tracking (for debug)
-last_input_position = -1;
-last_input_time = 0;
 
 // Anti-spam (prevent double-hits from one keypress)
 input_cooldown_ms = 50;
 last_hit_time = array_create(7, 0);  // 6 positions + shake
-
 
 check_position_input = function(_position, _verb, _current_time_ms) {
 	// Input 10 routes to the correct device for this player automatically!
@@ -44,13 +33,6 @@ check_position_input = function(_position, _verb, _current_time_ms) {
 			show_debug_message($"P{player_index} Miss! Position: {_position}, Diff: {_time_diff}ms (outside window)");
 		}
 	}
-}
-
-check_shake_input = function(_current_time_ms) {
-	if (!InputPressed(INPUT_VERB.SHAKE, player_index)) return;
-	
-	// TODO: Implement shake note detection
-	show_debug_message($"P{player_index} Shake input detected!");
 }
 
 find_closest_note = function(_position, _current_time_ms) {

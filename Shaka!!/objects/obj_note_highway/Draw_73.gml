@@ -38,10 +38,4 @@ draw_set_alpha(0.5);
 scribble($"[fa_center][c_gray]{_shake_label}")
 	.draw(x, y + highway_radius + 50);
 
-// Draw debug controls hint (only on P0's highway)
-if (player_index == 0) {
-	scribble("[fa_left][c_gray][scale,0.7]F1=Debug F2=Input F3=Timing F4=Windows")
-		.draw(10, NOTE_HIGHWAY_HEIGHT - 15);
-}
-
 draw_set_alpha(1.0);
